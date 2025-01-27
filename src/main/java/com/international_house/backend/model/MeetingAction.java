@@ -9,3 +9,13 @@ public enum MeetingAction {
     DELETED
 
 }
+
+
+public enum MeetingAction2 {
+
+    CREATED,
+    UPDATED,
+    CANCELED,
+    DELETED
+
+}
