@@ -6,8 +6,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -18,22 +18,25 @@ import org.hibernate.annotations.UuidGenerator;
 @Entity
 @Getter
 @Setter
-public class Queue {
+public class Staff {
 
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue
     @UuidGenerator
-    private UUID id;
+    private UUID staffNumber;
 
-    @Column
-    private Integer position;
+    @Column(nullable = false)
+    private String firstName;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consultation_id_id", nullable = false, unique = true)
-    private Consultation consultationId;
+    @Column(nullable = false)
+    private String lastName;
 
-    @OneToMany(mappedBy = "inQueue")
-    private Set<Visitor> visitorId;
+    @Column(nullable = false, columnDefinition = "text")
+    private String passwordHash;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_consulting_area_id", nullable = false)
+    private ConsultingArea assignedConsultingArea;
 
 }
