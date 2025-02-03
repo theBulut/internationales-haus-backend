@@ -1,50 +1,51 @@
 package com.international_house.backend.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
 
 
 @Entity
 @Getter
 @Setter
+//@ToString(exclude = {"consultationHours", "staffSet",})
+@EqualsAndHashCode(of = {"consultingAreaId", "name"})
 public class ConsultingArea {
+
+    public static final String PRIMARY_SEQUENCE = "primary_sequence";
 
     @Id
     @Column(nullable = false, updatable = false)
     @SequenceGenerator(
-            name = "primary_sequence",
-            sequenceName = "primary_sequence",
+            name = PRIMARY_SEQUENCE,
+            sequenceName = PRIMARY_SEQUENCE,
             allocationSize = 1,
             initialValue = 10000
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "primary_sequence"
+            generator = PRIMARY_SEQUENCE
     )
-    private Integer id;
+    private Integer consultingAreaId;
 
-    @Column(nullable = false, unique = true, columnDefinition = "text")
+    @Column(nullable = false, columnDefinition = "text")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "added_by_id", nullable = false)
-    private Admin addedBy;
 
-    @OneToMany(mappedBy = "consultingArea")
-    private Set<Consultation> consultations;
+    public ConsultingArea(String name) {
+        this.name = name;
+    }
 
-    @OneToMany(mappedBy = "assignedConsultingArea")
-    private Set<Staff> staffs;
-
+    public ConsultingArea() {
+    }
 }
