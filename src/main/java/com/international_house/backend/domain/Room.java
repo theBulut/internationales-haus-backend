@@ -25,25 +25,9 @@ public class Room {
     @Column(nullable = false, updatable = false)
     @GeneratedValue
     @UuidGenerator
-    private UUID id;
+    private UUID roomId;
 
     @Column(nullable = false, unique = true)
     private String roomLabel;
-
-    @Column(columnDefinition = "text")
-    private String location;
-
-    @Column
-    private Integer capacity;
-
-    @Column
-    private LocalDateTime createdAt;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by_id", nullable = false)
-    private Admin createdBy;
-
-    @OneToMany(mappedBy = "assignedRoom")
-    private Set<Consultation> meetings;
 
 }

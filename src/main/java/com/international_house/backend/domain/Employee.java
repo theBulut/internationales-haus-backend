@@ -7,8 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import java.util.Set;
+
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,25 +17,27 @@ import org.hibernate.annotations.UuidGenerator;
 @Entity
 @Getter
 @Setter
-public class Staff {
+public class Employee {
 
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue
     @UuidGenerator
-    private UUID staffNumber;
+    private UUID employeeNumber;
 
     @Column(nullable = false)
-    private String firstName;
+    private String employeeName;
 
-    @Column(nullable = false)
-    private String lastName;
 
     @Column(nullable = false, columnDefinition = "text")
     private String passwordHash;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigned_consulting_area_id", nullable = false)
-    private ConsultingArea assignedConsultingArea;
+    public Employee(String employeeName, String passwordHash) {
+        this.employeeName = employeeName;
+        this.passwordHash = passwordHash;
+    }
+
+    public Employee() {
+    }
 
 }
