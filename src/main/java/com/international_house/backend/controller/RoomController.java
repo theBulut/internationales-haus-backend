@@ -25,8 +25,8 @@ public class RoomController {
     }
 
     @PostMapping
-    public void addNewRoom(@RequestBody Room room){
-        roomService.addNewRoom(room);
+    public void createRoom(@RequestBody Room room){
+        roomService.createRoom(room);
     }
 
     @DeleteMapping

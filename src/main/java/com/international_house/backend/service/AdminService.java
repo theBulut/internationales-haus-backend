@@ -24,7 +24,7 @@ public class AdminService {
         return adminRepository.findAll();
     }
 
-    public void addNewAdmin(Admin admin) {
+    public void createAdmin(Admin admin) {
         adminRepository.save(admin);
     }
 

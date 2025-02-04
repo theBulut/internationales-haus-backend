@@ -23,7 +23,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
     
-    public void addNewEmployee(Employee employee) {
+    public void createEmployee(Employee employee) {
         employeeRepository.save(employee);
     }
     

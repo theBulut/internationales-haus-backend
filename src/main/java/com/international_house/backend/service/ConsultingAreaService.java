@@ -5,10 +5,7 @@ import com.international_house.backend.repos.ConsultingAreaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class ConsultingAreaService {
     }
     
 
-    public void addNewConsultationArea(ConsultingArea consultingArea) {
+    public void createConsultationArea(ConsultingArea consultingArea) {
         consultingAreaRepository.save(consultingArea);
     }
     

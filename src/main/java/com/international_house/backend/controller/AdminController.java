@@ -24,8 +24,8 @@ public class AdminController {
         return adminService.getAdmins();
     }
     @PostMapping
-    public void registerNewAdmin(@RequestBody Admin admin) {
-        adminService.addNewAdmin(admin);
+    public void createAdmin(@RequestBody Admin admin) {
+        adminService.createAdmin(admin);
     }
 
     @DeleteMapping

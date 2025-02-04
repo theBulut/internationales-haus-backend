@@ -23,7 +23,7 @@ public class VisitorService {
         return visitorRepository.findAll();
     }
 
-    public void addNewVisitor(Visitor visitor) {
+    public void createVisitor(Visitor visitor) {
         visitorRepository.save(visitor);
     }
 

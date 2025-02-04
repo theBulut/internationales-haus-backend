@@ -23,7 +23,8 @@ public class ConsultationHour {
     @GeneratedValue
     @UuidGenerator
     @Column(nullable = false, updatable = false, unique = true)
-    private UUID consultationNumber; // Unique identifier for ConsultationHour
+
+    private UUID consultationNumber;
 
     @Column(nullable = false)
     private LocalDateTime startTime;

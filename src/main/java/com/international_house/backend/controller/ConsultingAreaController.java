@@ -24,8 +24,8 @@ public class ConsultingAreaController {
     }
 
     @PostMapping
-    public void addNewConsultingArea(@RequestBody ConsultingArea consultingArea){
-        consultingAreaService.addNewConsultationArea(consultingArea);
+    public void createConsultingArea(@RequestBody ConsultingArea consultingArea){
+        consultingAreaService.createConsultationArea(consultingArea);
     }
 
     @DeleteMapping

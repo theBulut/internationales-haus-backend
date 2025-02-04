@@ -23,8 +23,8 @@ public class VisitorController {
         return visitorService.getVisitors();
     }
     @PostMapping
-    public void addNewVisitor(@RequestBody Visitor visitor){
-        visitorService.addNewVisitor(visitor);
+    public void createVisitor(@RequestBody Visitor visitor){
+        visitorService.createVisitor(visitor);
     }
 
     @DeleteMapping
