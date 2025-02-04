@@ -2,6 +2,8 @@ package com.international_house.backend.service;
 
 import com.international_house.backend.domain.ConsultingArea;
 import com.international_house.backend.repos.ConsultingAreaRepository;
+import com.international_house.backend.response.ConsultationHourResponse;
+import com.international_house.backend.response.ConsultingAreaResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +26,12 @@ public class ConsultingAreaService {
     }
     
 
-    public void createConsultationArea(ConsultingArea consultingArea) {
+    public void createConsultingArea(ConsultingArea consultingArea) {
         consultingAreaRepository.save(consultingArea);
     }
     
     @Transactional
-    public void updateConsultationArea(Integer consultingAreaId, ConsultingArea newConsultingArea) {
+    public void updateConsultingArea(Integer consultingAreaId, ConsultingArea newConsultingArea) {
         ConsultingArea existingConsultingArea = consultingAreaRepository.findById(consultingAreaId)
                 .orElseThrow(() -> new IllegalStateException("Consulting Area with ID " + consultingAreaId + " does not exist"));
         existingConsultingArea.setName(newConsultingArea.getName());
@@ -38,13 +40,40 @@ public class ConsultingAreaService {
     
     
 
-    public void deleteConsultationAreaById(Integer consultingAreaId) {
+    public void deleteConsultingAreaById(Integer consultingAreaId) {
         consultingAreaRepository.deleteById(consultingAreaId);
     }
 
     public ConsultingArea getConsultingAreaById(Integer consultingAreaId) {
         return consultingAreaRepository.findById(consultingAreaId)
                 .orElseThrow(() -> new EntityNotFoundException("ConsultingArea not found with ID " + consultingAreaId));
+    }
+
+    @Transactional
+    public ConsultingAreaResponse getConsultingAreaWithConsultationHours(String name) {
+        // Find ConsultingArea by name
+        ConsultingArea consultingArea = consultingAreaRepository.findByName(name);
+        if (consultingArea == null) {
+            throw new RuntimeException("ConsultingArea with name '" + name + "' not found");
+        }
+
+        // Prepare DTO response to return
+        ConsultingAreaResponse response = new ConsultingAreaResponse();
+        response.setConsultingAreaName(consultingArea.getName());
+
+        // Map ConsultationHours to DTOs for response
+        response.setConsultationHours(
+                consultingArea.getConsultationHours().stream()
+                        .map(consultationHour -> {
+                            ConsultationHourResponse hourResponse = new ConsultationHourResponse();
+                            hourResponse.setStartTime(consultationHour.getStartTime());
+                            hourResponse.setEndTime(consultationHour.getEndTime());
+                            hourResponse.setExplanation(consultationHour.getExplanation());
+                            return hourResponse;
+                        }).toList()
+        );
+
+        return response;
     }
     
 }

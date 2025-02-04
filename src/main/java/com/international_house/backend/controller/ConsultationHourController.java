@@ -1,9 +1,11 @@
 package com.international_house.backend.controller;
 
 import com.international_house.backend.domain.ConsultationHour;
+import com.international_house.backend.request.ConsultationHourRequest;
 import com.international_house.backend.service.ConsultationHourService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +32,10 @@ public class ConsultationHourController {
     
     // Method to create a new ConsultationHour
     @PostMapping
-    public void createConsultationHour(@RequestBody ConsultationHour consultationHour) {
+    public ResponseEntity<String> createConsultationHour(
+            @RequestBody ConsultationHourRequest consultationHour) {
         consultationHourService.createConsultationHour(consultationHour);
+        return ResponseEntity.ok("ConsultationHour added successfully!");
     }
 
     // Method to delete a ConsultationHour by its ID

@@ -35,6 +35,10 @@ public class ConsultationHour {
     @Column
     private String explanation;
 
+    @ManyToOne
+    @JoinColumn(name = "consulting_area_id", nullable = false)
+    private ConsultingArea consultingArea;
+
 
     public ConsultationHour(LocalDateTime startTime, LocalDateTime endTime, String explanation, ConsultingArea consultingArea) {
         this.startTime = startTime;

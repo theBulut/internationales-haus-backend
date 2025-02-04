@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConsultingAreaRepository extends JpaRepository<ConsultingArea, Integer> {
+
+    ConsultingArea findByName(String name); // Add if needed for later lookup by name
 }
