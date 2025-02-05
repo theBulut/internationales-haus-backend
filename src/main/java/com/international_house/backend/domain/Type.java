@@ -1,18 +1,10 @@
 package com.international_house.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-
 
 
 @Entity
@@ -20,7 +12,7 @@ import lombok.ToString;
 @Setter
 //@ToString(exclude = {"consultationHours", "staffSet",})
 @EqualsAndHashCode(of = {"consultingAreaId", "name"})
-public class ConsultingArea {
+public class Type {
 
     public static final String PRIMARY_SEQUENCE = "primary_sequence";
 
@@ -30,22 +22,22 @@ public class ConsultingArea {
             name = PRIMARY_SEQUENCE,
             sequenceName = PRIMARY_SEQUENCE,
             allocationSize = 1,
-            initialValue = 10000
+            initialValue = 100
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = PRIMARY_SEQUENCE
     )
-    private Integer consultingAreaId;
+    private Integer id;
 
     @Column(nullable = false, columnDefinition = "text")
     private String name;
 
 
-    public ConsultingArea(String name) {
+    public Type(String name) {
         this.name = name;
     }
 
-    public ConsultingArea() {
+    public Type() {
     }
 }

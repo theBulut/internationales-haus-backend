@@ -1,52 +1,49 @@
 package com.international_house.backend.service;
 
-import com.international_house.backend.domain.ConsultingArea;
-import com.international_house.backend.repos.ConsultingAreaRepository;
+import com.international_house.backend.domain.Type;
+import com.international_house.backend.repos.TypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
 @Service
-public class ConsultingAreaService {
+public class TypeService {
     
-    private final ConsultingAreaRepository consultingAreaRepository;
+    private final TypeRepository typeRepository;
     
-    public ConsultingAreaService(ConsultingAreaRepository consultingAreaRepository) {
-        this.consultingAreaRepository = consultingAreaRepository;
+    public TypeService(TypeRepository typeRepository) {
+        this.typeRepository = typeRepository;
     }
     
     @GetMapping
-    public List<ConsultingArea> getConsultationAreas() {
-        return consultingAreaRepository.findAll();
+    public List<Type> getConsultationAreas() {
+        return typeRepository.findAll();
     }
     
 
-    public void addNewConsultationArea(ConsultingArea consultingArea) {
-        consultingAreaRepository.save(consultingArea);
+    public void addNewConsultationArea(Type type) {
+        typeRepository.save(type);
     }
     
     @Transactional
-    public void updateConsultationArea(Integer consultingAreaId, ConsultingArea newConsultingArea) {
-        ConsultingArea existingConsultingArea = consultingAreaRepository.findById(consultingAreaId)
+    public void updateConsultationArea(Integer consultingAreaId, Type newType) {
+        Type existingType = typeRepository.findById(consultingAreaId)
                 .orElseThrow(() -> new IllegalStateException("Consulting Area with ID " + consultingAreaId + " does not exist"));
-        existingConsultingArea.setName(newConsultingArea.getName());
-        consultingAreaRepository.save(existingConsultingArea);
+        existingType.setName(newType.getName());
+        typeRepository.save(existingType);
     }
     
     
 
     public void deleteConsultationAreaById(Integer consultingAreaId) {
-        consultingAreaRepository.deleteById(consultingAreaId);
+        typeRepository.deleteById(consultingAreaId);
     }
 
-    public ConsultingArea getConsultingAreaById(Integer consultingAreaId) {
-        return consultingAreaRepository.findById(consultingAreaId)
+    public Type getConsultingAreaById(Integer consultingAreaId) {
+        return typeRepository.findById(consultingAreaId)
                 .orElseThrow(() -> new EntityNotFoundException("ConsultingArea not found with ID " + consultingAreaId));
     }
     

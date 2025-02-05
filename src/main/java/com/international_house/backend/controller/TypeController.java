@@ -1,41 +1,41 @@
 package com.international_house.backend.controller;
 
-import com.international_house.backend.domain.ConsultingArea;
-import com.international_house.backend.service.ConsultingAreaService;
+import com.international_house.backend.domain.Type;
+import com.international_house.backend.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/api/consultingArea")
-public class ConsultingAreaController {
+@RequestMapping(path="/api/types")
+public class TypeController {
 
-    private final ConsultingAreaService consultingAreaService;
+    private final TypeService typeService;
 
     @Autowired
-    public ConsultingAreaController(ConsultingAreaService consultingAreaService) {
-        this.consultingAreaService = consultingAreaService;
+    public TypeController(TypeService typeService) {
+        this.typeService = typeService;
     }
 
     @GetMapping
-    public List<ConsultingArea> getConsultingAreas(){
-        return consultingAreaService.getConsultationAreas();
+    public List<Type> getTypes(){
+        return typeService.getConsultationAreas();
     }
 
     @PostMapping
-    public void addNewConsultingArea(@RequestBody ConsultingArea consultingArea){
-        consultingAreaService.addNewConsultationArea(consultingArea);
+    public void createType(@RequestBody Type type){
+        typeService.addNewConsultationArea(type);
     }
 
     @DeleteMapping
-    public void deleteConsultingAreaById(@RequestBody Integer consultingAreaId){
-        consultingAreaService.deleteConsultationAreaById(consultingAreaId);
+    public void deleteType(@RequestBody Integer consultingAreaId){
+        typeService.deleteConsultationAreaById(consultingAreaId);
     }
 
     @PutMapping
-    public void updateConsultingArea(@RequestBody ConsultingArea consultingArea){
-        consultingAreaService.updateConsultationArea(consultingArea.getConsultingAreaId(), consultingArea);
+    public void updateConsultingArea(@RequestBody Type type){
+        typeService.updateConsultationArea(type.getId(), type);
     }
 
 }

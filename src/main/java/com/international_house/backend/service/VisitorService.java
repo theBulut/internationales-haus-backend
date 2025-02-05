@@ -20,12 +20,16 @@ public class VisitorService {
 
     @GetMapping
     public List<Visitor> getVisitors() {
+
         return visitorRepository.findAll();
+
     }
 
-    public void addNewVisitor(Visitor visitor) {
+    public void createVisitor(Visitor visitor) {
+
         visitorRepository.save(visitor);
     }
+
 
     public void deleteVisitorById(UUID visitorId) {
         visitorRepository.deleteById(visitorId);

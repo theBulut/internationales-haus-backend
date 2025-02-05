@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/api/visitor")
+@RequestMapping(path="/api/visitors")
 public class VisitorController {
 
     private final VisitorService visitorService;
@@ -20,16 +20,23 @@ public class VisitorController {
 
     @GetMapping
     public List<Visitor> getVisitors(){
+
         return visitorService.getVisitors();
+
     }
+
+
+
     @PostMapping
-    public void addNewVisitor(@RequestBody Visitor visitor){
-        visitorService.addNewVisitor(visitor);
+    public void createVisitor(@RequestBody Visitor visitor){
+
+        visitorService.createVisitor(visitor);
+
     }
 
     @DeleteMapping
     public void deleteVisitor(@RequestBody Visitor visitor){
-        visitorService.deleteVisitorById(visitor.getVisitorId());
+        visitorService.deleteVisitorById(visitor.getId());
     }
 
 

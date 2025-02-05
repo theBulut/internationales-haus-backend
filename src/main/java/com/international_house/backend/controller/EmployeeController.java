@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path="/api/employee")
+@RequestMapping(path="/api/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -32,11 +32,11 @@ public class EmployeeController {
 
     @DeleteMapping
     public void deleteEmployee(@RequestBody Employee employee){
-        employeeService.deleteEmployeeById(employee.getEmployeeNumber());
+        employeeService.deleteEmployeeById(employee.getId());
     }
 
     @PutMapping
     public void updateEmployee(@RequestBody Employee employee){
-        employeeService.updateEmployee(employee.getEmployeeNumber(), employee);
+        employeeService.updateEmployee(employee.getId(), employee);
     }
 }

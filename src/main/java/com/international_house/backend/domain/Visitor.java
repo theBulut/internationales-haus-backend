@@ -27,13 +27,22 @@ public class Visitor {
     @GeneratedValue
     @UuidGenerator
     @Column(nullable = false, updatable = false, unique = true)
-    private UUID visitorId; // Unique identifier for Visitor
+    private UUID id; // Unique identifier for Visitor
 
     @Column(nullable =false)
-    private boolean inQueue = true;
+    private boolean isBeingCalled = false;
 
-    @Column(nullable = false)
-    private boolean checkedIn = false; // Whether the visitor has checked in
+    @Column
+    private Long timeStamp;
+
+    @Column
+    private String consultationHour;
+
+    public Visitor(boolean isBeingCalled, Long timeStamp, String consultationHour) {
+        this.isBeingCalled = isBeingCalled;
+        this.timeStamp = timeStamp;
+        this.consultationHour = consultationHour;
+    }
 
 
 }

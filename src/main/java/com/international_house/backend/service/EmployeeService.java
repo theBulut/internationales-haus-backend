@@ -36,12 +36,12 @@ public class EmployeeService {
         Employee existingEmployee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new IllegalArgumentException("Employee with ID " + employeeId + " not found"));
 
-        if (updatedEmployee.getEmployeeName() != null) {
-            existingEmployee.setEmployeeName(updatedEmployee.getEmployeeName());
+        if (updatedEmployee.getName() != null) {
+            existingEmployee.setName(updatedEmployee.getName());
         }
 
-        if (updatedEmployee.getPasswordHash() != null) {
-            existingEmployee.setPasswordHash(updatedEmployee.getPasswordHash());
+        if (updatedEmployee.getPassword() != null) {
+            existingEmployee.setPassword(updatedEmployee.getPassword());
         }
 
         employeeRepository.save(existingEmployee);
