@@ -1,13 +1,10 @@
 package com.international_house.backend.service;
 
 import com.international_house.backend.domain.ConsultationHour;
-import com.international_house.backend.domain.ConsultingArea;
 import com.international_house.backend.repos.ConsultationHourRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +16,7 @@ public class ConsultationHourService {
 
 
     public ConsultationHourService(ConsultationHourRepository consultationHourRepository,
-                                   ConsultingAreaService consultingAreaService) {
+                                   TypeService typeService) {
         this.consultationHourRepository = consultationHourRepository;
     }
 
@@ -37,16 +34,16 @@ public class ConsultationHourService {
         return consultationHourRepository.findById(consultationNumber);
     }
 
-    public ConsultationHour updateConsultationHour(UUID consultationNumber, ConsultationHour updatedConsultationHour) {
-        return consultationHourRepository.findById(consultationNumber)
-                .map(existingConsultationHour -> {
-                    existingConsultationHour.setStartTime(updatedConsultationHour.getStartTime());
-                    existingConsultationHour.setEndTime(updatedConsultationHour.getEndTime());
-                    //existingConsultationHour.setConsultingArea(updatedConsultationHour.getConsultingArea());
-                    return consultationHourRepository.save(existingConsultationHour);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("ConsultationHour not found with id: " + consultationNumber));
-    }
+//    public ConsultationHour updateConsultationHour(UUID consultationNumber, ConsultationHour updatedConsultationHour) {
+//        return consultationHourRepository.findById(consultationNumber)
+//                .map(existingConsultationHour -> {
+//                    existingConsultationHour.setStartTime(updatedConsultationHour.getStartTime());
+//                    existingConsultationHour.setEndT(updatedConsultationHour.getEndT());
+//                    //existingConsultationHour.setConsultingArea(updatedConsultationHour.getConsultingArea());
+//                    return consultationHourRepository.save(existingConsultationHour);
+//                })
+//                .orElseThrow(() -> new EntityNotFoundException("ConsultationHour not found with id: " + consultationNumber));
+//    }
 
     public void deleteConsultationHour(UUID consultationNumber) {
         if (consultationHourRepository.existsById(consultationNumber)) {

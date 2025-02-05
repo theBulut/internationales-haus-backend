@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path= "/api/consultationHour")
+@RequestMapping(path= "/api/consultations")
 public class ConsultationHourController {
     
     private final ConsultationHourService consultationHourService;
@@ -35,18 +35,18 @@ public class ConsultationHourController {
     }
 
     // Method to delete a ConsultationHour by its ID
-    @DeleteMapping("/{consultationNumber}")
-    public void deleteConsultationHour(@PathVariable UUID consultationNumber) {
-        consultationHourService.deleteConsultationHour(consultationNumber);
+    @DeleteMapping("/{id}")
+    public void deleteConsultationHour(@PathVariable UUID id) {
+        consultationHourService.deleteConsultationHour(id);
     }
 
     // Method to update an existing ConsultationHour
-    @PutMapping("/{consultationNumber}")
-    public ConsultationHour updateConsultationHour(
-            @PathVariable UUID consultationNumber,
-            @RequestBody ConsultationHour updatedConsultationHour) {
-        return consultationHourService.updateConsultationHour(consultationNumber, updatedConsultationHour);
-    }
+//    @PutMapping("/{consultationNumber}")
+//    public ConsultationHour updateConsultationHour(
+//            @PathVariable UUID consultationNumber,
+//            @RequestBody ConsultationHour updatedConsultationHour) {
+//        return consultationHourService.updateConsultationHour(consultationNumber, updatedConsultationHour);
+//    }
 
 
     // Method to retrieve a ConsultationHour by its ID

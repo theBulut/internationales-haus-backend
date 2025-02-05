@@ -1,6 +1,5 @@
 package com.international_house.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,23 +22,44 @@ public class ConsultationHour {
     @GeneratedValue
     @UuidGenerator
     @Column(nullable = false, updatable = false, unique = true)
-
-    private UUID consultationNumber;
-
-    @Column(nullable = false)
-    private LocalDateTime startTime;
-
-    @Column(nullable = false)
-    private LocalDateTime endTime;
+    private UUID id;
 
     @Column
-    private String explanation;
+    private Long startTime;
+
+    @Column
+    private Long endTime;
+
+    @Column
+    private String description;
+
+    @Column
+    private String type;
+
+    @Column
+    private Boolean isCanceled;
+
+    @Column
+    private String reason;
+
+    @Column
+    private String repeat;
+
+    @Column
+    private String room;
 
 
-    public ConsultationHour(LocalDateTime startTime, LocalDateTime endTime, String explanation, ConsultingArea consultingArea) {
+
+
+    public ConsultationHour(Long startTime, Long endTime, String description, String type, Boolean isCanceled, String reason, String repeat, String room) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.explanation = explanation;
+        this.description = description;
+        this.type = type;
+        this.isCanceled = isCanceled;
+        this.repeat = repeat;
+        this.reason = reason;
+        this.room = room;
     }
 
 
