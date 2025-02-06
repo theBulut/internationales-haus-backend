@@ -25,31 +25,37 @@ public class ConsultationHourService {
     }
 
 
-        public List<ConsultationHour> getAllConsultationHours () {
-            return consultationHourRepository.findAll();
-        }
-
-
-    public Optional<ConsultationHour> getConsultationHourById(UUID consultationNumber) {
-        return consultationHourRepository.findById(consultationNumber);
+    public List<ConsultationHour> getAllConsultationHours () {
+        return consultationHourRepository.findAll();
     }
 
-//    public ConsultationHour updateConsultationHour(UUID consultationNumber, ConsultationHour updatedConsultationHour) {
-//        return consultationHourRepository.findById(consultationNumber)
-//                .map(existingConsultationHour -> {
-//                    existingConsultationHour.setStartTime(updatedConsultationHour.getStartTime());
-//                    existingConsultationHour.setEndT(updatedConsultationHour.getEndT());
-//                    //existingConsultationHour.setConsultingArea(updatedConsultationHour.getConsultingArea());
-//                    return consultationHourRepository.save(existingConsultationHour);
-//                })
-//                .orElseThrow(() -> new EntityNotFoundException("ConsultationHour not found with id: " + consultationNumber));
-//    }
 
-    public void deleteConsultationHour(UUID consultationNumber) {
-        if (consultationHourRepository.existsById(consultationNumber)) {
-            consultationHourRepository.deleteById(consultationNumber);
+    public Optional<ConsultationHour> getConsultationHourById(UUID id) {
+        return consultationHourRepository.findById(id);
+    }
+
+    public void updateConsultationHour(UUID id, ConsultationHour update) {
+        ConsultationHour hour = consultationHourRepository.findById(id).get();
+        
+        if( hour != null){
+            hour.setStartTime(update.getStartTime());
+            hour.setEndTime(update.getEndTime());
+            hour.setDescription(update.getDescription());
+            hour.setType(update.getType());
+            hour.setIsCanceled(update.getIsCanceled());
+            hour.setRepeat(update.getRepeat());
+            hour.setReason(update.getReason());
+
+            consultationHourRepository.save(hour);
+        }
+        else throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
+    }
+
+    public void deleteConsultationHour(UUID id) {
+        if (consultationHourRepository.existsById(id)) {
+            consultationHourRepository.deleteById(id);
         } else {
-            throw new EntityNotFoundException("ConsultationHour not found with id: " + consultationNumber);
+            throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
         }
     }
     

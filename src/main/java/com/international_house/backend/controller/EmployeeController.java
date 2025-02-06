@@ -1,10 +1,12 @@
 package com.international_house.backend.controller;
 
 import com.international_house.backend.service.EmployeeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.international_house.backend.domain.Employee;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -20,23 +22,28 @@ public class EmployeeController {
 
     }
 
-    @GetMapping
-    public List<Employee> getEmployees(){
-        return employeeService.getEmployees();
-    }
-
     @PostMapping
     public void addNewEmployee(@RequestBody Employee employee){
         employeeService.addNewEmployee(employee);
     }
 
-    @DeleteMapping
-    public void deleteEmployee(@RequestBody Employee employee){
-        employeeService.deleteEmployeeById(employee.getId());
+    @GetMapping
+    public List<Employee> getEmployees(){
+        return employeeService.getEmployees();
     }
 
-    @PutMapping
-    public void updateEmployee(@RequestBody Employee employee){
-        employeeService.updateEmployee(employee.getId(), employee);
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable UUID id){
+        return employeeService.getEmployeeById(id).get();
+    }
+
+    @PutMapping("/{id}")
+    public void updateEmployee(@PathVariable UUID id, @RequestBody Employee employee){
+        employeeService.updateEmployee(id, employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable UUID id){
+        employeeService.deleteEmployeeById(id);
     }
 }

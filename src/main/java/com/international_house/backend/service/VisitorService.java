@@ -2,10 +2,13 @@ package com.international_house.backend.service;
 
 import com.international_house.backend.domain.Visitor;
 import com.international_house.backend.repos.VisitorRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -18,18 +21,29 @@ public class VisitorService {
         this.visitorRepository = visitorRepository;
     }
 
-    @GetMapping
-    public List<Visitor> getVisitors() {
-
-        return visitorRepository.findAll();
-
-    }
-
     public void createVisitor(Visitor visitor) {
-
         visitorRepository.save(visitor);
     }
 
+    public List<Visitor> getVisitors() {
+        return visitorRepository.findAll();
+    }
+
+    public Optional<Visitor> getVisitorById(UUID id) {
+        return visitorRepository.findById(id);
+    }
+
+    public void updateVisitor(UUID id, Visitor update) {
+        Visitor visitor = visitorRepository.findById(id).get();
+        if( visitor != null){
+            visitor.setConsultationHour(update.getConsultationHour());
+            visitor.setTimeStamp(update.getTimeStamp());
+            visitor.setBeingCalled(update.getBeingCalled());
+
+            visitorRepository.save(visitor);
+        }
+        else throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
+    }
 
     public void deleteVisitorById(UUID visitorId) {
         visitorRepository.deleteById(visitorId);
