@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+import java.sql.Date;
 import java.util.UUID;
 
 import lombok.*;
@@ -16,7 +17,7 @@ import org.hibernate.annotations.UuidGenerator;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConsultationHour {
+public class ConsultationEvent {
 
     @Id
     @GeneratedValue
@@ -25,16 +26,19 @@ public class ConsultationHour {
     private UUID id;
 
     @Column
-    private Long startTime;
+    private Consultation consultation;
 
     @Column
-    private Long endTime;
+    private Date startDate;
 
     @Column
-    private String description;
+    private Date endDate;
 
     @Column
-    private String type;
+    private String repeat;
+
+    @Column
+    private String room;
 
     @Column
     private Boolean isCanceled = false;
@@ -42,9 +46,5 @@ public class ConsultationHour {
     @Column
     private String reason;
 
-    @Column
-    private String repeat;
-
-    @Column
-    private String room;
+    
 }

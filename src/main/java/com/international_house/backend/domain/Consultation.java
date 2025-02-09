@@ -1,5 +1,7 @@
 package com.international_house.backend.domain;
 
+import java.util.HexFormat;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Type {
+public class Consultation {
 
     public static final String PRIMARY_SEQUENCE = "primary_sequence";
 
@@ -30,4 +32,13 @@ public class Type {
 
     @Column(nullable = false, columnDefinition = "text")
     private String name;
+
+    @Column
+    private String description;
+
+    @Column
+    private String shortVersion;
+
+    @Column
+    private HexFormat color;
 }

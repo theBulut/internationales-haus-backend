@@ -36,8 +36,8 @@ public class VisitorService {
     public void updateVisitor(UUID id, Visitor update) {
         Visitor visitor = visitorRepository.findById(id).get();
         if( visitor != null){
-            visitor.setConsultationHour(update.getConsultationHour());
             visitor.setTimeStamp(update.getTimeStamp());
+            visitor.setConsultation(update.getConsultation());
             visitor.setBeingCalled(update.getBeingCalled());
 
             visitorRepository.save(visitor);

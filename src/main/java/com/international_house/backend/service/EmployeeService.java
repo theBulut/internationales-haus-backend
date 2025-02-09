@@ -20,7 +20,7 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
     
-    public void addNewEmployee(Employee employee) {
+    public void createEmployee(Employee employee) {
         employeeRepository.save(employee);
     }
 

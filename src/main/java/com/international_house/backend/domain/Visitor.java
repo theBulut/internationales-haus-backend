@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-
+import java.sql.Date;
 import java.util.UUID;
 
 import lombok.*;
@@ -26,11 +26,11 @@ public class Visitor {
     private UUID id; // Unique identifier for Visitor
 
     @Column
+    private Date timeStamp;
+    
+    @Column
     private Boolean beingCalled = false;
 
     @Column
-    private Long timeStamp;
-
-    @Column
-    private String consultationHour;
+    private Consultation consultation;
 }
