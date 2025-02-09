@@ -17,7 +17,6 @@ import org.hibernate.annotations.UuidGenerator;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Visitor {
 
     @Id
@@ -27,19 +26,11 @@ public class Visitor {
     private UUID id; // Unique identifier for Visitor
 
     @Column
-    private Boolean beingCalled;
+    private Boolean beingCalled = false;
 
     @Column
     private Long timeStamp;
 
     @Column
     private String consultationHour;
-
-    public Visitor(Boolean beingCalled, Long timeStamp, String consultationHour) {
-        this.beingCalled = beingCalled;
-        this.timeStamp = timeStamp;
-        this.consultationHour = consultationHour;
-    }
-
-
 }

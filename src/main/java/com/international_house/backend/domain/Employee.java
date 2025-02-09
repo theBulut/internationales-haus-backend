@@ -6,39 +6,33 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 
     @Id
-    @Column(nullable = false, updatable = false)
     @GeneratedValue
     @UuidGenerator
+    @Column(nullable = false, updatable = false)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
-
-    @Column(nullable = false, columnDefinition = "text")
+    @Column
     private String password;
 
     @Column
-    private Boolean isAdmin;
+    private Boolean isAdmin = false;
 
-    public Employee(String name, String password, Boolean isAdmin) {
-        this.name = name;
-        this.password = password;
-        this.isAdmin = isAdmin;
-    }
-
-    public Employee() {
-    }
-
+    @Column
+    private Boolean isLoggedIn = false;
 }

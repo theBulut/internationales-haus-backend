@@ -1,11 +1,13 @@
 package com.international_house.backend.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import java.util.UUID;
 
 import lombok.*;
-
 import org.hibernate.annotations.UuidGenerator;
 
 
@@ -14,7 +16,6 @@ import org.hibernate.annotations.UuidGenerator;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class ConsultationHour {
 
     @Id
@@ -36,7 +37,7 @@ public class ConsultationHour {
     private String type;
 
     @Column
-    private Boolean isCanceled;
+    private Boolean isCanceled = false;
 
     @Column
     private String reason;
@@ -46,20 +47,4 @@ public class ConsultationHour {
 
     @Column
     private String room;
-
-
-
-
-    public ConsultationHour(Long startTime, Long endTime, String description, String type, Boolean isCanceled, String reason, String repeat, String room) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.description = description;
-        this.type = type;
-        this.isCanceled = isCanceled;
-        this.repeat = repeat;
-        this.reason = reason;
-        this.room = room;
-    }
-
-
 }

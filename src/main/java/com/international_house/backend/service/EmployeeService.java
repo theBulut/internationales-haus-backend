@@ -40,6 +40,7 @@ public class EmployeeService {
             employee.setIsAdmin(update.getIsAdmin());
             employee.setName(update.getName());
             employee.setPassword(update.getPassword());
+            employee.setIsLoggedIn(update.getIsLoggedIn());
 
             employeeRepository.save(employee);
         }

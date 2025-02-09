@@ -1,17 +1,15 @@
 package com.international_house.backend.domain;
 
 import jakarta.persistence.*;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
 @Getter
 @Setter
-//@ToString(exclude = {"consultationHours", "staffSet",})
-@EqualsAndHashCode(of = {"consultingAreaId", "name"})
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Type {
 
     public static final String PRIMARY_SEQUENCE = "primary_sequence";
@@ -32,12 +30,4 @@ public class Type {
 
     @Column(nullable = false, columnDefinition = "text")
     private String name;
-
-
-    public Type(String name) {
-        this.name = name;
-    }
-
-    public Type() {
-    }
 }
