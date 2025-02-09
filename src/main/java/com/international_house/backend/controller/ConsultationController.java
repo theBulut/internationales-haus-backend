@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/api/types")
+@RequestMapping(path="/api/consultations")
 public class ConsultationController {
 
     private final ConsultationService consultationService;

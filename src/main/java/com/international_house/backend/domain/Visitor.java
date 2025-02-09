@@ -4,13 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.sql.Date;
 import java.util.UUID;
 
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-
 
 @Entity
 @Getter
@@ -31,6 +32,7 @@ public class Visitor {
     @Column
     private Boolean beingCalled = false;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "consultation")
     private Consultation consultation;
 }

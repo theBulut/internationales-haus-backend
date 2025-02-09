@@ -3,12 +3,12 @@ package com.international_house.backend.config;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+//import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @Configuration
 @EntityScan("com.international_house.backend.domain")
 @EnableJpaRepositories("com.international_house.backend.repos")
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class DomainConfig {
 }

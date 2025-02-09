@@ -1,33 +1,23 @@
 package com.international_house.backend.domain;
 
-import java.util.HexFormat;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-import jakarta.persistence.*;
 import lombok.*;
-
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Consultation {
-
-    public static final String PRIMARY_SEQUENCE = "primary_sequence";
 
     @Id
     @Column(nullable = false, updatable = false)
-    @SequenceGenerator(
-            name = PRIMARY_SEQUENCE,
-            sequenceName = PRIMARY_SEQUENCE,
-            allocationSize = 1,
-            initialValue = 100
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = PRIMARY_SEQUENCE
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, columnDefinition = "text")
@@ -40,5 +30,5 @@ public class Consultation {
     private String shortVersion;
 
     @Column
-    private HexFormat color;
+    private String color;
 }
