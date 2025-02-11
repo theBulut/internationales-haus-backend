@@ -35,9 +35,8 @@ public class EmployeeService {
 
         if (employee != null) {
             employee.setIsAdmin(update.getIsAdmin());
-            employee.setName(update.getName());
+            employee.setUsername(update.getUsername());
             employee.setPassword(update.getPassword());
-            employee.setIsLoggedIn(update.getIsLoggedIn());
 
             employeeRepository.save(employee);
         } else

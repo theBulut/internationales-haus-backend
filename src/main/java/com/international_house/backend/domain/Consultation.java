@@ -30,5 +30,5 @@ public class Consultation {
     private String shortVersion;
 
     @Column
-    private String color;
+    private String color = "#e4001a";
 }

@@ -24,14 +24,11 @@ public class Employee {
     private UUID id;
 
     @Column
-    private String name;
+    private String username;
 
     @Column
     private String password;
 
     @Column
     private Boolean isAdmin = false;
-
-    @Column
-    private Boolean isLoggedIn = false;
 }
