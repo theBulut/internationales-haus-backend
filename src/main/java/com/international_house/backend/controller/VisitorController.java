@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path="/api/visitors")
+@RequestMapping(path = "/api/visitors")
 public class VisitorController {
 
     private final VisitorService visitorService;
@@ -21,27 +21,27 @@ public class VisitorController {
     }
 
     @PostMapping
-    public void createVisitor(@RequestBody Visitor visitor){
+    public void createVisitor(@RequestBody Visitor visitor) {
         visitorService.createVisitor(visitor);
     }
 
     @GetMapping
-    public List<Visitor> getVisitors(){
+    public List<Visitor> getVisitors() {
         return visitorService.getVisitors();
     }
 
     @GetMapping("/{id}")
-    public Visitor getVisitorsByID(@PathVariable UUID id){
+    public Visitor getVisitorsByID(@PathVariable UUID id) {
         return visitorService.getVisitorById(id).get();
     }
 
     @PutMapping("/{id}")
-    public void updateConsultationHour( @PathVariable UUID id,@RequestBody Visitor update ) {
+    public void updateConsultationHour(@PathVariable UUID id, @RequestBody Visitor update) {
         visitorService.updateVisitor(id, update);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteVisitor(@PathVariable UUID id){
+    public void deleteVisitor(@PathVariable UUID id) {
         visitorService.deleteVisitorById(id);
     }
 }

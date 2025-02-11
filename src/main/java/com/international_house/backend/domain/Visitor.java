@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-import java.sql.Date;
 import java.util.UUID;
 
 import lombok.*;
@@ -27,8 +26,8 @@ public class Visitor {
     private UUID id; // Unique identifier for Visitor
 
     @Column
-    private Date timeStamp;
-    
+    private Long timeStamp;
+
     @Column
     private Boolean beingCalled = false;
 

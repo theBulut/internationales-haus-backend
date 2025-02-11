@@ -34,14 +34,14 @@ public class VisitorService {
 
     public void updateVisitor(UUID id, Visitor update) {
         Visitor visitor = visitorRepository.findById(id).get();
-        if( visitor != null){
+        if (visitor != null) {
             visitor.setTimeStamp(update.getTimeStamp());
             visitor.setConsultation(update.getConsultation());
             visitor.setBeingCalled(update.getBeingCalled());
 
             visitorRepository.save(visitor);
-        }
-        else throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
+        } else
+            throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
     }
 
     public void deleteVisitorById(UUID visitorId) {

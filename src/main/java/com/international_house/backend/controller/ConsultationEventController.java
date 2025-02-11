@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path= "/api/consultation/events")
+@RequestMapping(path = "/api/consultation/events")
 public class ConsultationEventController {
-    
+
     private final ConsultationEventService ConsultationEventService;
-    
+
     @Autowired
     public ConsultationEventController(ConsultationEventService ConsultationEventService) {
         this.ConsultationEventService = ConsultationEventService;
     }
 
-     // Method to create a new ConsultationEvent
-     @PostMapping
-     public void createConsultationEvent(@RequestBody ConsultationEvent ConsultationEvent) {
-         ConsultationEventService.createConsultationEvent(ConsultationEvent);
-     }
+    // Method to create a new ConsultationEvent
+    @PostMapping
+    public void createConsultationEvent(@RequestBody ConsultationEvent ConsultationEvent) {
+        ConsultationEventService.createConsultationEvent(ConsultationEvent);
+    }
 
     // Method to retrieve all ConsultationEvents
     @GetMapping
@@ -31,15 +31,15 @@ public class ConsultationEventController {
         return ConsultationEventService.getConsultationEvents();
     }
 
-     // Method to retrieve a ConsultationEvent by its ID
-     @GetMapping("/{id}")
-     public ConsultationEvent getConsultationEventById(@PathVariable UUID id) {
-         return ConsultationEventService.getConsultationEventById(id).get();
-     }
-    
+    // Method to retrieve a ConsultationEvent by its ID
+    @GetMapping("/{id}")
+    public ConsultationEvent getConsultationEventById(@PathVariable UUID id) {
+        return ConsultationEventService.getConsultationEventById(id).get();
+    }
+
     // Method to update an existing ConsultationEvent
     @PutMapping("/{id}")
-    public void updateConsultationEvent( @PathVariable UUID id,@RequestBody ConsultationEvent update ) {
+    public void updateConsultationEvent(@PathVariable UUID id, @RequestBody ConsultationEvent update) {
         ConsultationEventService.updateConsultationEvent(id, update);
     }
 

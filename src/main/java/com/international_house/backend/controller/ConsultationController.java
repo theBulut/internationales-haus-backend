@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/api/consultations")
+@RequestMapping(path = "/api/consultations")
 public class ConsultationController {
 
     private final ConsultationService consultationService;
@@ -20,27 +20,27 @@ public class ConsultationController {
     }
 
     @PostMapping
-    public void createConsultation(@RequestBody Consultation consultation){
+    public void createConsultation(@RequestBody Consultation consultation) {
         consultationService.createConsultation(consultation);
     }
 
     @GetMapping
-    public List<Consultation> getConsultations(){
+    public List<Consultation> getConsultations() {
         return consultationService.getConsultations();
     }
 
     @GetMapping("/{id}")
-    public Optional<Consultation> getConsultationById(Integer id){
+    public Optional<Consultation> getConsultationById(Integer id) {
         return consultationService.getConsultationById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteConsultation(@RequestBody Integer consultationId){
+    public void deleteConsultation(@RequestBody Integer consultationId) {
         consultationService.deleteConsultationById(consultationId);
     }
 
     @PutMapping("/{id}")
-    public void updateConsulting(@RequestBody Consultation consultation){
+    public void updateConsulting(@RequestBody Consultation consultation) {
         consultationService.updateConsultation(consultation.getId(), consultation);
     }
 }

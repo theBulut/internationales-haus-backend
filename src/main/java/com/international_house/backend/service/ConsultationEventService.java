@@ -14,7 +14,6 @@ public class ConsultationEventService {
 
     private final ConsultationEventRepository consultationEventRepository;
 
-
     public ConsultationEventService(ConsultationEventRepository consultationEventRepository) {
         this.consultationEventRepository = consultationEventRepository;
     }
@@ -23,7 +22,7 @@ public class ConsultationEventService {
         consultationEventRepository.save(ConsultationEvent);
     }
 
-    public List<ConsultationEvent> getConsultationEvents () {
+    public List<ConsultationEvent> getConsultationEvents() {
         return consultationEventRepository.findAll();
     }
 
@@ -33,8 +32,8 @@ public class ConsultationEventService {
 
     public void updateConsultationEvent(UUID id, ConsultationEvent update) {
         ConsultationEvent event = consultationEventRepository.findById(id).get();
-        
-        if( event != null){
+
+        if (event != null) {
             event.setConsultation(update.getConsultation());
             event.setStartDate(update.getStartDate());
             event.setEndDate(update.getEndDate());
@@ -43,8 +42,8 @@ public class ConsultationEventService {
             event.setReason(update.getReason());
 
             consultationEventRepository.save(event);
-        }
-        else throw new EntityNotFoundException("ConsultationEvent not found with id: " + id);
+        } else
+            throw new EntityNotFoundException("ConsultationEvent not found with id: " + id);
     }
 
     public void deleteConsultationEvent(UUID id) {
@@ -54,5 +53,5 @@ public class ConsultationEventService {
             throw new EntityNotFoundException("ConsultationEvent not found with id: " + id);
         }
     }
-    
+
 }

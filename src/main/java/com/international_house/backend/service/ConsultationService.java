@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Service
 public class ConsultationService {
-    
+
     private final ConsultationRepository consultationRepository;
-    
+
     public ConsultationService(ConsultationRepository consultationRepository) {
         this.consultationRepository = consultationRepository;
     }
@@ -21,26 +21,26 @@ public class ConsultationService {
         consultationRepository.save(consultation);
     }
 
-    public List<Consultation> getConsultations () {
+    public List<Consultation> getConsultations() {
         return consultationRepository.findAll();
     }
-    
+
     public Optional<Consultation> getConsultationById(Integer id) {
         return consultationRepository.findById(id);
     }
-    
+
     public void updateConsultation(Integer id, Consultation update) {
         Consultation consultation = consultationRepository.findById(id).get();
-        
-        if( consultation != null){
+
+        if (consultation != null) {
             consultation.setName(update.getName());
             consultation.setDescription(update.getDescription());
             consultation.setShortVersion(update.getShortVersion());
             consultation.setColor(update.getColor());
 
             consultationRepository.save(consultation);
-        }
-        else throw new EntityNotFoundException("ConsultationEvent not found with id: " + id);
+        } else
+            throw new EntityNotFoundException("ConsultationEvent not found with id: " + id);
     }
 
     public void deleteConsultationById(Integer id) {

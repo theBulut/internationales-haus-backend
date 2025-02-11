@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 @Configuration
 @EntityScan("com.international_house.backend.domain")
 @EnableJpaRepositories("com.international_house.backend.repos")
-//@EnableTransactionManagement
+// @EnableTransactionManagement
 public class DomainConfig {
 }

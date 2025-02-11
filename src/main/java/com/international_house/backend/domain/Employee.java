@@ -10,7 +10,6 @@ import java.util.UUID;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
-
 @Entity
 @Getter
 @Setter

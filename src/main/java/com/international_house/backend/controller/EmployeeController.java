@@ -8,13 +8,11 @@ import com.international_house.backend.domain.Employee;
 import java.util.List;
 import java.util.UUID;
 
-
 @RestController
-@RequestMapping(path="/api/employees")
+@RequestMapping(path = "/api/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-
 
     @Autowired
     public EmployeeController(EmployeeService employeeService) {
@@ -23,27 +21,27 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public void createEmployee(@RequestBody Employee employee){
+    public void createEmployee(@RequestBody Employee employee) {
         employeeService.createEmployee(employee);
     }
 
     @GetMapping
-    public List<Employee> getEmployees(){
+    public List<Employee> getEmployees() {
         return employeeService.getEmployees();
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable UUID id){
+    public Employee getEmployeeById(@PathVariable UUID id) {
         return employeeService.getEmployeeById(id).get();
     }
 
     @PutMapping("/{id}")
-    public void updateEmployee(@PathVariable UUID id, @RequestBody Employee employee){
+    public void updateEmployee(@PathVariable UUID id, @RequestBody Employee employee) {
         employeeService.updateEmployee(id, employee);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable UUID id){
+    public void deleteEmployee(@PathVariable UUID id) {
         employeeService.deleteEmployeeById(id);
     }
 }

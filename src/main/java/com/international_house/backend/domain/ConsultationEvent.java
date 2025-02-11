@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-import java.sql.Date;
 import java.util.UUID;
 
 import lombok.*;
@@ -31,10 +30,10 @@ public class ConsultationEvent {
     private Consultation consultation;
 
     @Column
-    private Date startDate;
+    private Long startDate;
 
     @Column
-    private Date endDate;
+    private Long endDate;
 
     @Column
     private String repeat;
