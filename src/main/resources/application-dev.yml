@@ -1,23 +1,32 @@
 spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5434/backend}
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/internationales-haus}
     username: ${JDBC_DATABASE_USERNAME:postgres}
-    password: ${JDBC_DATABASE_PASSWORD:root}
+    password: ${JDBC_DATABASE_PASSWORD:postgres}
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
   jpa:
+    database: POSTGRESQL
+    show-sql: false
     hibernate:
-      ddl-auto: create-drop
-    open-in-view: false
+      ddl-auto: none
     properties:
       hibernate:
+        batch_fetch_style: DYNAMIC
+        order_inserts: true
+        update_inserts: true
         jdbc:
-          lob:
-            non_contextual_creation: true
-        id:
-          new_generator_mappings: true
-    show-sql: true
+          batch_size: 100
+          fetch_size: 100
+          batch_versioned_data: true
+          time_zone: UTC
+        generate_statistics: false
+
 error:
   handling:
     http-status-in-json-response: true
@@ -25,5 +34,11 @@ error:
     full-stacktrace-http-statuses: 5xx
     log-levels:
       5xx: ERROR
-springdoc:
-  pathsToMatch: /
+
+admin:
+  username: ${ADMIN_USERNAME:adminUserName}
+  password: ${ADMIN_PASSWORD:adminPassword}
+
+jwt:
+  secret: ${JWT_SECRET:WZD+yI3tlH3YKeq2pQ9y8IqaRAW/my8S55+HJKyqcu0=}
+  expiration: ${JWT_EXPIRATION:86400000}

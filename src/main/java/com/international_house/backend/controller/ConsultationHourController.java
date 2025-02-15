@@ -1,51 +1,54 @@
 package com.international_house.backend.controller;
 
-import com.international_house.backend.domain.ConsultationHour;
+import com.international_house.backend.controller.endpoint.ConsultationHourEndpoint;
+import com.international_house.backend.dto.BaseResponseDto;
+import com.international_house.backend.entity.ConsultationHour;
 import com.international_house.backend.service.ConsultationHourService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path= "/api/consultations")
+@RequiredArgsConstructor
+@Tag(name = ConsultationHourEndpoint.API_TAG)
+@RequestMapping(path = ConsultationHourEndpoint.BASE_URI)
 public class ConsultationHourController {
-    
+
     private final ConsultationHourService consultationHourService;
-    
-    @Autowired
-    public ConsultationHourController(ConsultationHourService consultationHourService) {
-        this.consultationHourService = consultationHourService;
+
+    @PostMapping
+    public ResponseEntity<BaseResponseDto> createConsultationHour(@RequestBody @Valid ConsultationHour consultationHour) {
+        ConsultationHour createdConsultationHour = consultationHourService.createConsultationHour(consultationHour);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Consultation hour created successfully!").data(createdConsultationHour).build());
     }
 
-     // Method to create a new ConsultationHour
-     @PostMapping
-     public void createConsultationHour(@RequestBody ConsultationHour consultationHour) {
-         consultationHourService.createConsultationHour(consultationHour);
-     }
-
-    // Method to retrieve all ConsultationHours
     @GetMapping
-    public List<ConsultationHour> getConsultationHours() {
-        return consultationHourService.getAllConsultationHours();
+    public ResponseEntity<BaseResponseDto> getConsultationHours() {
+        List<ConsultationHour> consultationHours = consultationHourService.getConsultationHours();
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Consultation hours retrieved successfully!").data(consultationHours).build());
     }
 
-     // Method to retrieve a ConsultationHour by its ID
-     @GetMapping("/{id}")
-     public ConsultationHour getConsultationHourById(@PathVariable UUID id) {
-         return consultationHourService.getConsultationHourById(id).get();
-     }
-    
-    // Method to update an existing ConsultationHour
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseResponseDto> getConsultationHourById(@PathVariable UUID id) {
+        ConsultationHour consultationHour = consultationHourService.getConsultationHourById(id);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Consultation hour retrieved successfully!").data(consultationHour).build());
+    }
+
     @PutMapping("/{id}")
-    public void updateConsultationHour( @PathVariable UUID id,@RequestBody ConsultationHour update ) {
-        consultationHourService.updateConsultationHour(id, update);
+    public ResponseEntity<BaseResponseDto> updateConsultationHour(@PathVariable UUID id, @RequestBody @Valid ConsultationHour update) {
+        Optional<ConsultationHour> updatedConsultationHour = consultationHourService.updateConsultationHour(id, update);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Consultation hour updated successfully!").data(updatedConsultationHour).build());
     }
 
-    // Method to delete a ConsultationHour by its ID
     @DeleteMapping("/{id}")
-    public void deleteConsultationHour(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponseDto> deleteConsultationHour(@PathVariable UUID id) {
         consultationHourService.deleteConsultationHour(id);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Consultation hour deleted successfully!").build());
     }
 }

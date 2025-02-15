@@ -1,52 +1,21 @@
 package com.international_house.backend.service;
 
-import com.international_house.backend.domain.Visitor;
-import com.international_house.backend.repos.VisitorRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-
-import org.springframework.stereotype.Service;
+import com.international_house.backend.dto.request.CreateVisitorDto;
+import com.international_house.backend.entity.Visitor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+public interface VisitorService {
+    Visitor createVisitor(CreateVisitorDto visitor);
 
-@Service
-public class VisitorService {
+    List<Visitor> getVisitors();
 
-    private final VisitorRepository visitorRepository;
+    Visitor getVisitorById(UUID id);
 
-    public VisitorService(VisitorRepository visitorRepository) {
-        this.visitorRepository = visitorRepository;
-    }
+    Optional<Visitor> updateVisitor(UUID id, Visitor update);
 
-    public void createVisitor(Visitor visitor) {
-        visitorRepository.save(visitor);
-    }
-
-    public List<Visitor> getVisitors() {
-        return visitorRepository.findAll();
-    }
-
-    public Optional<Visitor> getVisitorById(UUID id) {
-        return visitorRepository.findById(id);
-    }
-
-    public void updateVisitor(UUID id, Visitor update) {
-        Visitor visitor = visitorRepository.findById(id).get();
-        if( visitor != null){
-            visitor.setConsultationHour(update.getConsultationHour());
-            visitor.setTimeStamp(update.getTimeStamp());
-            visitor.setBeingCalled(update.getBeingCalled());
-
-            visitorRepository.save(visitor);
-        }
-        else throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
-    }
-
-    public void deleteVisitorById(UUID visitorId) {
-        visitorRepository.deleteById(visitorId);
-    }
-
+    void deleteVisitorById(UUID visitorId);
 }
+
