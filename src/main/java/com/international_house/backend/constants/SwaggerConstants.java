@@ -1,4 +1,4 @@
-package com.international_house.backend.contants;
+package com.international_house.backend.constants;
 
 import lombok.experimental.UtilityClass;
 

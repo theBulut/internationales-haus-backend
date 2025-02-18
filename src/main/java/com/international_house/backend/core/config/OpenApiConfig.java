@@ -1,6 +1,6 @@
 package com.international_house.backend.core.config;
 
-import com.international_house.backend.contants.SwaggerConstants;
+import com.international_house.backend.constants.SwaggerConstants;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
