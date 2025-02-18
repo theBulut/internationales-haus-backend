@@ -1,0 +1,24 @@
+server:
+  http2:
+    enabled: true
+  tomcat:
+    connection-timeout: 4000
+    threads:
+      max: 300
+      min-spare: 60
+    remoteip:
+      protocol-header: X-Forwarded-Proto
+      remote-ip-header: X-FORWARDED-FOR
+      port-header: X-Forwarded-Port
+
+spring:
+  profiles:
+    active: ${ACTIVE_PROFILE}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:info}
+
+springdoc:
+  swagger-ui:
+    path: /documentation
