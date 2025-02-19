@@ -5,9 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.Lob;
 import lombok.*;
 
 @Entity
@@ -15,20 +13,17 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Visitor {
+public class Information {
 
     @Id
-    @Column(nullable = false, updatable = false, unique = true)
+    @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
-    private Long timeStamp;
+    private String language;
 
     @Column
-    private Boolean beingCalled = false;
-
-    @ManyToOne
-    @JoinColumn(name = "consultation")
-    private Consultation consultation;
+    @Lob
+    private String content;
 }

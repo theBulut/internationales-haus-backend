@@ -16,7 +16,7 @@ import lombok.*;
 public class Consultation {
 
     @Id
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

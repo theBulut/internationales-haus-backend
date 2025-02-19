@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/visitors")
@@ -30,18 +29,23 @@ public class VisitorController {
         return visitorService.getVisitors();
     }
 
+    @GetMapping("/timeStamp/{timeStamp}")
+    public Visitor getVisitorsByTimeStamp(@PathVariable Long timeStamp) {
+        return visitorService.getVisitorByTimeStamp(timeStamp).get();
+    }
+
     @GetMapping("/{id}")
-    public Visitor getVisitorsByID(@PathVariable UUID id) {
+    public Visitor getVisitorsByID(@PathVariable Integer id) {
         return visitorService.getVisitorById(id).get();
     }
 
     @PutMapping("/{id}")
-    public void updateConsultationHour(@PathVariable UUID id, @RequestBody Visitor update) {
+    public void updateConsultationHour(@PathVariable Integer id, @RequestBody Visitor update) {
         visitorService.updateVisitor(id, update);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteVisitor(@PathVariable UUID id) {
+    public void deleteVisitor(@PathVariable Integer id) {
         visitorService.deleteVisitorById(id);
     }
 }

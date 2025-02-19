@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class VisitorService {
@@ -28,11 +27,15 @@ public class VisitorService {
         return visitorRepository.findAll();
     }
 
-    public Optional<Visitor> getVisitorById(UUID id) {
+    public Optional<Visitor> getVisitorById(Integer id) {
         return visitorRepository.findById(id);
     }
 
-    public void updateVisitor(UUID id, Visitor update) {
+    public Optional<Visitor> getVisitorByTimeStamp(Long timeStamp) {
+        return visitorRepository.findByTimeStamp(timeStamp);
+    }
+
+    public void updateVisitor(Integer id, Visitor update) {
         Visitor visitor = visitorRepository.findById(id).get();
         if (visitor != null) {
             visitor.setTimeStamp(update.getTimeStamp());
@@ -44,7 +47,7 @@ public class VisitorService {
             throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
     }
 
-    public void deleteVisitorById(UUID visitorId) {
+    public void deleteVisitorById(Integer visitorId) {
         visitorRepository.deleteById(visitorId);
     }
 
