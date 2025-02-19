@@ -45,8 +45,8 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponseDto> updateEmployee(@PathVariable UUID id, @RequestBody Employee employee) {
-        Optional<Employee> updatedEmployee = employeeService.updateEmployee(id, employee);
-        return ResponseEntity.ok(BaseResponseDto.builder().message("Employee updated successfully!").data(updatedEmployee).build());
+        /*int updatedEmployee = */employeeService.updateEmployee(id, employee);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Employee updated successfully!")/*.data(updatedEmployee)*/.build());
     }
 
     @DeleteMapping("/{id}")

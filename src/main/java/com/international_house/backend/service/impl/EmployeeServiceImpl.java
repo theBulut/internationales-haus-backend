@@ -37,8 +37,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + id));
     }
 
-    public Optional<Employee> updateEmployee(UUID id, Employee update) {
-        return employeeRepository.updateEmployeeById(id, update);
+    public void updateEmployee(UUID id, Employee update) {
+        employeeRepository.updateEmployeeById(id, update);
     }
 
     public void deleteEmployeeById(UUID employeeId) {
