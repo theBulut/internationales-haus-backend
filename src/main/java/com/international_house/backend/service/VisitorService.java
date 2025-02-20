@@ -1,54 +1,20 @@
 package com.international_house.backend.service;
 
-import com.international_house.backend.domain.Visitor;
-import com.international_house.backend.repos.VisitorRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-
-import org.springframework.stereotype.Service;
+import com.international_house.backend.dto.request.CreateVisitorDto;
+import com.international_house.backend.entity.Visitor;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-@Service
-public class VisitorService {
+public interface VisitorService {
+    Visitor createVisitor(CreateVisitorDto visitor);
 
-    private final VisitorRepository visitorRepository;
+    List<Visitor> getVisitors();
 
-    public VisitorService(VisitorRepository visitorRepository) {
-        this.visitorRepository = visitorRepository;
-    }
+    Visitor getVisitorById(UUID id);
 
-    public void createVisitor(Visitor visitor) {
-        visitorRepository.save(visitor);
-    }
+    Optional<Visitor> updateVisitor(UUID id, Visitor update);
 
-    public List<Visitor> getVisitors() {
-        return visitorRepository.findAll();
-    }
-
-    public Optional<Visitor> getVisitorById(Integer id) {
-        return visitorRepository.findById(id);
-    }
-
-    public Optional<Visitor> getVisitorByTimeStamp(Long timeStamp) {
-        return visitorRepository.findByTimeStamp(timeStamp);
-    }
-
-    public void updateVisitor(Integer id, Visitor update) {
-        Visitor visitor = visitorRepository.findById(id).get();
-        if (visitor != null) {
-            visitor.setTimeStamp(update.getTimeStamp());
-            visitor.setConsultation(update.getConsultation());
-            visitor.setBeingCalled(update.getBeingCalled());
-
-            visitorRepository.save(visitor);
-        } else
-            throw new EntityNotFoundException("ConsultationHour not found with id: " + id);
-    }
-
-    public void deleteVisitorById(Integer visitorId) {
-        visitorRepository.deleteById(visitorId);
-    }
-
+    void deleteVisitorById(UUID visitorId);
 }

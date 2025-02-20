@@ -1,51 +1,63 @@
 package com.international_house.backend.controller;
 
-import com.international_house.backend.domain.Visitor;
+import om.i
+
+import com.international_house.backend.dto.BaseResponseDto;
+import com.international_house.backend.dto.request.CreateVisitorDto;
+import com.international_house.backend.entity.Visitor;
 import com.international_house.backend.service.VisitorService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.spri import org.springfraeork.web.bind.ann
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/api/visitors")
+@RequiredArgsConstructor
+@Tag(name = VisitorEndpoint.API_TAG)
+@RequestMapping(path = VisitorEndpoint.BASE_URI)
+
 public class VisitorController {
 
     private final VisitorService visitorService;
 
-    @Autowired
-    public VisitorController(VisitorService visitorService) {
-        this.visitorService = visitorService;
-    }
-
     @PostMapping
-    public void createVisitor(@RequestBody Visitor visitor) {
-        visitorService.createVisitor(visitor);
+    public ResponseEntity<BaseResponseDto> createVisitor(@Valid @RequestBody CreateVisitorDto visitor) {
+        Visitor createdVisitor = visitorService.createVisitor(visitor);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Visitor created successfully!").data(createdVisitor).build());
     }
 
     @GetMapping
-    public List<Visitor> getVisitors() {
-        return visitorService.getVisitors();
+    pubic ResponseEn         List<Visitor> visitors = visitorService.getVisitors();
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Visitors retrieved successfully!").data(visitors).build());
     }
 
-    @GetMapping("/timeStamp/{timeStamp}")
-    public Visitor getVisitorsByTimeStamp(@PathVariable Long timeStamp) {
-        return visitorService.getVisitorByTimeStamp(timeStamp).get();
-    }
+        @GeMapp
 
-    @GetMapping("/{id}")
-    public Visitor getVisitorsByID(@PathVariable Integer id) {
-        return visitorService.getVisitorById(id).get();
+    public ResponseEntity<BaseResponseDto> getVisitorsByID(@PathVariable UUID id) {
+        Visitor visitor = visitorService.getVisitorById(id);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Visitor retrieved successfully!").data(visitor).build());
     }
 
     @PutMapping("/{id}")
-    public void updateConsultationHour(@PathVariable Integer id, @RequestBody Visitor update) {
-        visitorService.updateVisitor(id, update);
+    public ResponseEntity<BaseResponseDto> updateConsultationHour(@PathVariable UUID id, @RequestBody Visitor update) {
+        Optional<Visitor> updatedVisitor = visitorService.updateVisitor(id, update);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Visitor updated successfully!").data(updatedVisitor).build());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteVisitor(@PathVariable Integer id) {
+    public ResponseEntity<BaseResponseDto> deleteVisitor(@PathVariable UUID id) {
         visitorService.deleteVisitorById(id);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Visitor deleted successfully!").build());
     }
 }
+
+
+    
+                
+                
+                
+                
