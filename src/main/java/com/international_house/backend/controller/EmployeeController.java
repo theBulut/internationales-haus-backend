@@ -11,8 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.international_house.backend.entity.Employee;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -25,38 +23,51 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> addNewEmployee(@RequestBody Employee employee) {
-        Employee newEmployee = employeeService.addNewEmployee(employee);
+    public ResponseEntity<BaseResponseDto> createEmployee(@RequestBody Employee employee) {
         return ResponseEntity
-                .ok(BaseResponseDto.builder().message("Employee added successfully!").data(newEmployee).build());
+                .ok(BaseResponseDto
+                        .builder()
+                        .data(employeeService.createEmployee(employee))
+                        .message("Employee added successfully!")
+                        .build());
     }
 
     @GetMapping
     public ResponseEntity<BaseResponseDto> getEmployees() {
-        List<Employee> employees = employeeService.getEmployees();
         return ResponseEntity
-                .ok(BaseResponseDto.builder().message("Employees retrieved successfully!").data(employees).build());
+                .ok(BaseResponseDto
+                        .builder()
+                        .data(employeeService.getEmployees())
+                        .message("Employees retrieved successfully!")
+                        .build());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponseDto> getEmployeeById(@PathVariable UUID id) {
-        Employee employee = employeeService.getEmployeeById(id);
         return ResponseEntity
-                .ok(BaseResponseDto.builder().message("Employee retrieved successfully!").data(employee).build());
+                .ok(BaseResponseDto.builder()
+                        .data(employeeService.getEmployee(id))
+                        .message("Employee retrieved successfully!")
+                        .build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponseDto> updateEmployee(@PathVariable UUID id, @RequestBody Employee employee) {
-        /* int updatedEmployee = */employeeService.updateEmployee(id, employee);
-        return ResponseEntity.ok(BaseResponseDto.builder().message("Employee updated successfully!")/*
-                                                                                                     * .data(
-                                                                                                     * updatedEmployee)
-                                                                                                     */.build());
+        return ResponseEntity
+                .ok(BaseResponseDto
+                        .builder()
+                        .data(employeeService.updateEmployee(id, employee))
+                        .message("Employee updated successfully!")
+                        .build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponseDto> deleteEmployee(@PathVariable UUID id) {
-        employeeService.deleteEmployeeById(id);
-        return ResponseEntity.ok(BaseResponseDto.builder().message("Employee deleted successfully!").build());
+        employeeService.deleteEmployee(id);
+        return ResponseEntity
+                .ok(BaseResponseDto
+                        .builder()
+                        .message("Employee deleted successfully!")
+                        .build());
     }
 }

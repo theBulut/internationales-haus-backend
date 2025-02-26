@@ -1,18 +1,18 @@
 package com.international_house.backend.repository;
 
-import com.international_house.backend.entity.Visitor;
-
 import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import com.international_house.backend.entity.Visitor;
 
 @Repository
-public interface VisitorRepository extends JpaRepository<Visitor, UUID> {
+public interface VisitorRepository extends JpaRepository<Visitor, Integer> {
     @Modifying
-    @Query("update Visitor v set v = ?2 where v.id = ?1")
-    Optional<Visitor> updateVisitorById(UUID id, Visitor update);
+    @Query("UPDATE Visitor v SET v = ?2 WHERE v.id = ?1")
+    Optional<Visitor> updateVisitorById(Integer id, Visitor update);
+
+    @Query("SELECT v FROM Visitor v WHERE v.timeStamp = ?1")
+    Optional<Visitor> findByTimeStamp(Long timeStamp);
 }

@@ -8,7 +8,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +25,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final RedisService redisService;
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -48,8 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
                             .build();
 
                     SecurityContextHolder.getContext().setAuthentication(
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
-                    );
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
                 }
             }
 

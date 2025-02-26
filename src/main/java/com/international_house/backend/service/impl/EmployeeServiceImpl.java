@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,10 +20,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Employee addNewEmployee(Employee employee) {
-        if (employeeRepository.findByName(employee.getName()).isPresent()) {
+    public Employee createEmployee(Employee employee) {
+        if (employeeRepository.findByName(employee.getName()).isPresent())
             throw new EmployeeAlreadyExistException();
-        }
+
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         return employeeRepository.save(employee);
     }
@@ -33,19 +32,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployeeById(UUID id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + id));
+    public Employee getEmployee(UUID id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + id));
     }
 
-    public void updateEmployee(UUID id, Employee update) {
-        employeeRepository.updateEmployeeById(id, update);
+    public Employee updateEmployee(UUID id, Employee update) {
+        return employeeRepository.updateEmployeeById(id, update)
+                .orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + id));
     }
 
-    public void deleteEmployeeById(UUID employeeId) {
-        Optional<Employee> employee = employeeRepository.findById(employeeId);
-        if (employee.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-        employeeRepository.deleteById(employeeId);
+    public void deleteEmployee(UUID id) {
+        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException());
+        employeeRepository.deleteById(id);
     }
 }

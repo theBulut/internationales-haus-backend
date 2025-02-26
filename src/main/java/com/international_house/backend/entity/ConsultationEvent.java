@@ -8,14 +8,12 @@ import lombok.*;
 
 import org.hibernate.annotations.UuidGenerator;
 
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ConsultationHour {
+public class ConsultationEvent {
 
     @Id
     @GeneratedValue
@@ -23,28 +21,28 @@ public class ConsultationHour {
     @Column(nullable = false, updatable = false, unique = true)
     private UUID id;
 
-    @Column
-    private Long startTime;
+    @ManyToOne
+    @JoinColumn(name = "consultation")
+    private Consultation consultation;
 
     @Column
-    private Long endTime;
+    private Long startDate;
+
+    @Column
+    private Long endDate;
 
     @Column
     private String description;
-
-    @Column
-    // @JoinColumn(name = "id") // join with Type Entity
-    private UUID department;
-
-    @Column
-    private Boolean isCanceled;
-
-    @Column
-    private String reason;
 
     @Column
     private String repeat;
 
     @Column
     private String room;
+
+    @Column
+    private Boolean isCanceled = false;
+
+    @Column
+    private String reason;
 }

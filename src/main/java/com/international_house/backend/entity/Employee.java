@@ -1,25 +1,30 @@
 package com.international_house.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.international_house.backend.enums.Role;
-import jakarta.persistence.*;
-
 import java.util.UUID;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
-
+import com.international_house.backend.enums.Role;
+import jakarta.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 
     @Id
-    @Column(nullable = false, updatable = false)
     @GeneratedValue
     @UuidGenerator
+    @Column(nullable = false, updatable = false)
     private UUID id;
 
     @Column(nullable = false)

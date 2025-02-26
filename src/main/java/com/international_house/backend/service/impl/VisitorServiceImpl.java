@@ -10,8 +10,6 @@ import com.international_house.backend.service.VisitorService;
 import com.international_house.backend.repository.VisitorRepository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,22 +22,23 @@ public class VisitorServiceImpl implements VisitorService {
         return visitorRepository.save(modelMapper.map(visitor, Visitor.class));
     }
 
+    public Visitor getVisitor(Integer id) {
+        return visitorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Visitor not found with id: " + id));
+    }
+
     public List<Visitor> getVisitors() {
         return visitorRepository.findAll();
     }
 
-    public Visitor getVisitorById(UUID id) {
-        return visitorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Visitor not found with id: " + id));
+    public Visitor updateVisitor(Integer id, Visitor update) {
+        return visitorRepository.updateVisitorById(id, update)
+                .orElseThrow(() -> new EntityNotFoundException("Visitor not found with id: " + id));
     }
 
-    public Optional<Visitor> updateVisitor(UUID id, Visitor payload) {
-        return visitorRepository.updateVisitorById(id, payload);
+    public void deleteVisitor(Integer id) {
+        visitorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Visitor not found with id: " + id));
+        visitorRepository.deleteById(id);
     }
-
-    public void deleteVisitorById(UUID visitorId) {
-        this.getVisitorById(visitorId);
-        visitorRepository.deleteById(visitorId);
-    }
-
 }
-

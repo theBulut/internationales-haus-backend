@@ -1,40 +1,55 @@
 package com.international_house.backend.controller;
 
-import com.international_house.backend.domain.Information;
+import com.international_house.backend.controller.endpoint.InformationEndpoint;
+import com.international_house.backend.controller.endpoint.VisitorEndpoint;
+import com.international_house.backend.dto.BaseResponseDto;
+import com.international_house.backend.entity.Information;
 import com.international_house.backend.service.InformationService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping(path = "/api/information")
+@RequiredArgsConstructor
+@Tag(name = VisitorEndpoint.API_TAG)
+@RequestMapping(path = InformationEndpoint.BASE_URI)
 public class InformationController {
 
     private final InformationService InformationService;
 
-    @Autowired
-    public InformationController(InformationService InformationService) {
-        this.InformationService = InformationService;
-    }
-
-    // Method to retrieve all Informations
     @GetMapping
-    public List<Information> getInformations() {
-        return InformationService.getInformations();
+    public ResponseEntity<BaseResponseDto> getInformations() {
+        return ResponseEntity
+                .ok(BaseResponseDto
+                        .builder()
+                        .data(InformationService.getInformations())
+                        .message("Visitors retrieved successfully!")
+                        .build());
     }
 
     @GetMapping("/{language}")
-    public Information getInformation(@PathVariable String language) {
-        if (InformationService.getInformation(language).isPresent())
-            return InformationService.getInformation(language).get();
-        return new Information();
+    public ResponseEntity<BaseResponseDto> getInformation(@PathVariable String language) {
+        return ResponseEntity
+                .ok(BaseResponseDto
+                        .builder()
+                        .data(InformationService.getInformation(language))
+                        .message("Information retrieved successfully!")
+                        .build());
 
     }
 
     // Method to update an existing Information
     @PutMapping("/{language}")
-    public void updateInformation(@PathVariable String language, @RequestBody Information update) {
+    public ResponseEntity<BaseResponseDto> updateInformation(@PathVariable String language,
+            @RequestBody Information update) {
         InformationService.updateInformation(language, update);
+        return ResponseEntity
+                .ok(BaseResponseDto.builder()
+                        .message("Information updated successfully!")
+                        .build());
+
     }
 }

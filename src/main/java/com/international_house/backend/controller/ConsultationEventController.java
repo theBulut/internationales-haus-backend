@@ -1,51 +1,75 @@
 package com.international_house.backend.controller;
 
-import com.international_house.backend.domain.ConsultationEvent;
+import com.international_house.backend.controller.endpoint.ConsultationEventEndpoint;
+import com.international_house.backend.dto.BaseResponseDto;
+import com.international_house.backend.entity.ConsultationEvent;
 import com.international_house.backend.service.ConsultationEventService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/api/consultation/events")
+@RequiredArgsConstructor
+@Tag(name = ConsultationEventEndpoint.API_TAG)
+@RequestMapping(path = ConsultationEventEndpoint.BASE_URI)
 public class ConsultationEventController {
 
     private final ConsultationEventService ConsultationEventService;
 
-    @Autowired
-    public ConsultationEventController(ConsultationEventService ConsultationEventService) {
-        this.ConsultationEventService = ConsultationEventService;
-    }
-
     // Method to create a new ConsultationEvent
     @PostMapping
-    public void createConsultationEvent(@RequestBody ConsultationEvent ConsultationEvent) {
-        ConsultationEventService.createConsultationEvent(ConsultationEvent);
+    public ResponseEntity<BaseResponseDto> createConsultationEvent(@RequestBody ConsultationEvent ConsultationEvent) {
+        return ResponseEntity
+                .ok(BaseResponseDto.builder()
+                        .message("Consultation event created successfully!")
+                        .data(ConsultationEventService.createConsultationEvent(ConsultationEvent))
+                        .build());
     }
 
     // Method to retrieve all ConsultationEvents
     @GetMapping
-    public List<ConsultationEvent> getConsultationEvents() {
-        return ConsultationEventService.getConsultationEvents();
+    public ResponseEntity<BaseResponseDto> getConsultationEvents() {
+        return ResponseEntity
+                .ok(BaseResponseDto.builder()
+                        .message("Consultation events retrieved successfully!")
+                        .data(ConsultationEventService.getConsultationEvents())
+                        .build());
     }
 
     // Method to retrieve a ConsultationEvent by its ID
     @GetMapping("/{id}")
-    public ConsultationEvent getConsultationEventById(@PathVariable UUID id) {
-        return ConsultationEventService.getConsultationEventById(id).get();
+    public ResponseEntity<BaseResponseDto> getConsultationEventById(@PathVariable UUID id) {
+        return ResponseEntity
+                .ok(BaseResponseDto.builder()
+                        .message("Consultation event retrieved successfully!")
+                        .data(ConsultationEventService.getConsultationEvent(id))
+                        .build());
     }
 
     // Method to update an existing ConsultationEvent
     @PutMapping("/{id}")
-    public void updateConsultationEvent(@PathVariable UUID id, @RequestBody ConsultationEvent update) {
-        ConsultationEventService.updateConsultationEvent(id, update);
+    public ResponseEntity<BaseResponseDto> updateConsultationEvent(@PathVariable UUID id,
+            @RequestBody ConsultationEvent update) {
+        return ResponseEntity
+                .ok(BaseResponseDto.builder()
+                        .message("Consultation event updated successfully!")
+                        .data(ConsultationEventService.updateConsultationEvent(id, update))
+                        .build());
     }
 
     // Method to delete a ConsultationEvent by its ID
     @DeleteMapping("/{id}")
-    public void deleteConsultationEvent(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponseDto> deleteConsultationEvent(@PathVariable UUID id) {
         ConsultationEventService.deleteConsultationEvent(id);
+        return ResponseEntity
+                .ok(BaseResponseDto
+                        .builder()
+                        .message("Consultation event deleted successfully!")
+                        .build());
     }
 }

@@ -5,7 +5,6 @@ import com.international_house.backend.core.security.jwt.JwtUtil;
 import com.international_house.backend.dto.BaseResponseDto;
 import com.international_house.backend.entity.Employee;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +30,7 @@ public class AuthController {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtil jwtUtil;
 
-    //TODO Remove It! It is the testing endpoint for DEVELOPMENT
+    // TODO Remove It! It is the testing endpoint for DEVELOPMENT
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/signup")
     @Operation(summary = "Remove It! It is the testing endpoint for DEVELOPMENT")
@@ -50,6 +49,7 @@ public class AuthController {
     public ResponseEntity<BaseResponseDto> getProfile(@RequestHeader("Authorization") String token) {
         String employeeId = jwtUtil.extractUserId(token.substring(7));
         Employee employee = authService.getProfile(UUID.fromString(employeeId));
-        return ResponseEntity.ok(BaseResponseDto.builder().message("Profile retrieved successfully!").data(employee).build());
+        return ResponseEntity
+                .ok(BaseResponseDto.builder().message("Profile retrieved successfully!").data(employee).build());
     }
 }

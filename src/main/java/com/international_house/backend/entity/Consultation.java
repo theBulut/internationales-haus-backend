@@ -1,29 +1,27 @@
-package com.international_house.backend.domain;
+package com.international_house.backend.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import lombok.*;
-
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Consultation {
 
     @Id
-    @Column(nullable = false, updatable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false, unique = true)
     private Integer id;
 
-    @Column(nullable = false, columnDefinition = "text")
+    @Column(nullable = false, unique = true, columnDefinition = "text")
     private String name;
 
-    @Column
+    @Column()
     private String description;
 
     @Column
