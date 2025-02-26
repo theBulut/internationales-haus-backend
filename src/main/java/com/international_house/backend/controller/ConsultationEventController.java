@@ -6,6 +6,7 @@ import com.international_house.backend.entity.ConsultationEvent;
 import com.international_house.backend.service.ConsultationEventService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ public class ConsultationEventController {
 
     // Method to create a new ConsultationEvent
     @PostMapping
-    public ResponseEntity<BaseResponseDto> createConsultationEvent(@RequestBody ConsultationEvent ConsultationEvent) {
+    public ResponseEntity<BaseResponseDto> createConsultationEvent(
+            @Valid @RequestBody ConsultationEvent ConsultationEvent) {
         return ResponseEntity
                 .ok(BaseResponseDto.builder()
                         .message("Consultation event created successfully!")

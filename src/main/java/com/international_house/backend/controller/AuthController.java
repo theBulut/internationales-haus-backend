@@ -3,7 +3,6 @@ package com.international_house.backend.controller;
 import com.international_house.backend.controller.endpoint.AuthEndpoint;
 import com.international_house.backend.core.security.jwt.JwtUtil;
 import com.international_house.backend.dto.BaseResponseDto;
-import com.international_house.backend.entity.Employee;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -35,21 +34,28 @@ public class AuthController {
     @PostMapping("/signup")
     @Operation(summary = "Remove It! It is the testing endpoint for DEVELOPMENT")
     public ResponseEntity<BaseResponseDto> signup(@RequestBody @Valid SignUpDto signUpDto) {
-        Employee employee = customUserDetailsService.registerUser(signUpDto);
-        return ResponseEntity.ok(BaseResponseDto.builder().message("User created successfully").data(employee).build());
+        return ResponseEntity
+                .ok(BaseResponseDto.builder()
+                        .data(customUserDetailsService.registerUser(signUpDto))
+                        .message("User created successfully")
+                        .build());
     }
 
     @PostMapping("/login")
     public ResponseEntity<BaseResponseDto> login(@RequestBody @Valid LoginRequestDto loginDto) {
-        String token = authService.login(loginDto);
-        return ResponseEntity.ok(BaseResponseDto.builder().message("User logged in successfully!").data(token).build());
+        return ResponseEntity
+                .ok(BaseResponseDto.builder()
+                        .data(authService.login(loginDto))
+                        .message("User logged in successfully!")
+                        .build());
     }
 
     @GetMapping("/profile")
     public ResponseEntity<BaseResponseDto> getProfile(@RequestHeader("Authorization") String token) {
-        String employeeId = jwtUtil.extractUserId(token.substring(7));
-        Employee employee = authService.getProfile(UUID.fromString(employeeId));
         return ResponseEntity
-                .ok(BaseResponseDto.builder().message("Profile retrieved successfully!").data(employee).build());
+                .ok(BaseResponseDto.builder()
+                        .data(authService.getProfile(UUID.fromString(jwtUtil.extractUserId(token.substring(7)))))
+                        .message("Profile retrieved successfully!")
+                        .build());
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.boot.actuate.health.HealthEndpoint;
 import org.springframework.web.bind.annotation.RestController;
 import com.international_house.backend.controller.endpoint.HealthCheckEndpoint;
 
-
 @RestController
 @RequiredArgsConstructor
 @Tag(name = HealthCheckEndpoint.API_TAG)
@@ -29,7 +28,6 @@ public class HealthController {
         return new HealthResponse(status == Status.UP ? "OK" : status.getCode(), currentTime);
     }
 
-
     @Data
     @AllArgsConstructor
     public static class HealthResponse {
@@ -37,4 +35,3 @@ public class HealthController {
         private long time;
     }
 }
-

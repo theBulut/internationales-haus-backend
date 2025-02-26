@@ -6,6 +6,7 @@ import com.international_house.backend.entity.Consultation;
 import com.international_house.backend.service.ConsultationService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ConsultationController {
     private final ConsultationService consultationService;
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> createConsultation(@RequestBody Consultation consultation) {
+    public ResponseEntity<BaseResponseDto> createConsultation(@Valid @RequestBody Consultation consultation) {
         return ResponseEntity
                 .ok(BaseResponseDto.builder()
                         .message("Consultation created successfully!")

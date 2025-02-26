@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class EmployeeEndpoint {
-    //? Employee Endpoint
+    // ? Employee Endpoint
     public static final String BASE_URI = "/api/employees";
     public static final String API_TAG = "Employee CRUD Endpoints";
 }

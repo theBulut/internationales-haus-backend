@@ -36,8 +36,8 @@ error:
       5xx: ERROR
 
 admin:
-  username: ${ADMIN_USERNAME:adminUserName}
-  password: ${ADMIN_PASSWORD:adminPassword}
+  username: ${ADMIN_USERNAME:admin}
+  password: ${ADMIN_PASSWORD:admin}
 
 jwt:
   secret: ${JWT_SECRET:WZD+yI3tlH3YKeq2pQ9y8IqaRAW/my8S55+HJKyqcu0=}

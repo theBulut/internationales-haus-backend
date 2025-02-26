@@ -7,6 +7,7 @@ import com.international_house.backend.entity.Information;
 import com.international_house.backend.service.InformationService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class InformationController {
     // Method to update an existing Information
     @PutMapping("/{language}")
     public ResponseEntity<BaseResponseDto> updateInformation(@PathVariable String language,
-            @RequestBody Information update) {
+            @Valid @RequestBody Information update) {
         InformationService.updateInformation(language, update);
         return ResponseEntity
                 .ok(BaseResponseDto.builder()

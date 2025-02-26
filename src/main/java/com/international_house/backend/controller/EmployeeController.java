@@ -5,6 +5,7 @@ import com.international_house.backend.dto.BaseResponseDto;
 import com.international_house.backend.service.EmployeeService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> createEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<BaseResponseDto> createEmployee(@Valid @RequestBody Employee employee) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
