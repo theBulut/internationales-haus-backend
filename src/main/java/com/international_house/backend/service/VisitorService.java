@@ -1,13 +1,12 @@
 package com.international_house.backend.service;
 
-import com.international_house.backend.dto.request.CreateVisitorDto;
 import com.international_house.backend.entity.Visitor;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 
 public interface VisitorService {
-    Visitor createVisitor(CreateVisitorDto visitor);
+    Visitor createVisitor(Visitor visitor);
 
     Visitor getVisitor(Integer id);
 

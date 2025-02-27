@@ -2,7 +2,6 @@ package com.international_house.backend.controller;
 
 import com.international_house.backend.controller.endpoint.VisitorEndpoint;
 import com.international_house.backend.dto.BaseResponseDto;
-import com.international_house.backend.dto.request.CreateVisitorDto;
 import com.international_house.backend.entity.Visitor;
 import com.international_house.backend.service.VisitorService;
 
@@ -22,7 +21,7 @@ public class VisitorController {
     private final VisitorService visitorService;
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> createVisitor(@Valid @RequestBody CreateVisitorDto visitor) {
+    public ResponseEntity<BaseResponseDto> createVisitor(@Valid @RequestBody Visitor visitor) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()

@@ -1,8 +1,6 @@
 package com.international_house.backend.service.impl;
 
-import com.international_house.backend.dto.request.CreateVisitorDto;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -17,11 +15,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VisitorServiceImpl implements VisitorService {
 
-    private final ModelMapper modelMapper;
     private final VisitorRepository visitorRepository;
 
-    public Visitor createVisitor(CreateVisitorDto visitor) {
-        return visitorRepository.save(modelMapper.map(visitor, Visitor.class));
+    public Visitor createVisitor(Visitor visitor) {
+        return visitorRepository.save(visitor);
     }
 
     public Visitor getVisitor(Integer id) {
