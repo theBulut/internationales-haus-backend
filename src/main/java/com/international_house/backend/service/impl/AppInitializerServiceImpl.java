@@ -26,7 +26,6 @@ public class AppInitializerServiceImpl implements AppInitializerService {
     private String adminPassword;
     private final EmployeeRepository employeeRepository;
 
-
     @PostConstruct
     public void initializeAdmin() {
         init();
@@ -42,7 +41,8 @@ public class AppInitializerServiceImpl implements AppInitializerService {
             admin.setPassword(passwordEncoder.encode(adminPassword));
             admin.setRole(Role.ADMIN);
             employeeRepository.save(admin);
-            log.info("Application Admin record created successfully: Username: {}, Password: {}", adminUsername, adminPassword);
+            log.info("Application Admin record created successfully: Username: {}, Password: {}", adminUsername,
+                    adminPassword);
         } else {
             log.info("Application Admin record already exists!");
         }

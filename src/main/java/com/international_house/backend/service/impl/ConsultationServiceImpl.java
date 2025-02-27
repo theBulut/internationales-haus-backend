@@ -1,6 +1,7 @@
 package com.international_house.backend.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -30,9 +31,10 @@ public class ConsultationServiceImpl implements ConsultationService {
                 .orElseThrow(() -> new EntityNotFoundException("Consultation Event not found with id: " + id));
     }
 
-    public Consultation updateConsultation(Integer id, Consultation update) {
-        return consultationRepository.updateConsultationById(id, update)
-                .orElseThrow(() -> new EntityNotFoundException("Consultation Event not found with id: " + id));
+    @Transactional
+    public void updateConsultation(Integer id, Consultation update) {
+        if (consultationRepository.findById(id).isPresent())
+            consultationRepository.save(update);
     }
 
     public void deleteConsultation(Integer id) {

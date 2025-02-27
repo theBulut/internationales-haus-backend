@@ -24,7 +24,8 @@ public class VisitorController {
     @PostMapping
     public ResponseEntity<BaseResponseDto> createVisitor(@Valid @RequestBody CreateVisitorDto visitor) {
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .data(visitorService.createVisitor(visitor))
                         .message("Visitor created successfully!")
                         .build());
@@ -33,7 +34,8 @@ public class VisitorController {
     @GetMapping
     public ResponseEntity<BaseResponseDto> getVisitors() {
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .data(visitorService.getVisitors())
                         .message("Visitors retrieved successfully!")
                         .build());
@@ -42,7 +44,8 @@ public class VisitorController {
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponseDto> getVisitor(@PathVariable Integer id) {
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .data(visitorService.getVisitor(id))
                         .message("Visitor retrieved successfully!")
                         .build());
@@ -50,9 +53,9 @@ public class VisitorController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponseDto> updateVisitor(@PathVariable Integer id, @RequestBody Visitor update) {
+        visitorService.updateVisitor(id, update);
         return ResponseEntity
                 .ok(BaseResponseDto.builder()
-                        .data(visitorService.updateVisitor(id, update))
                         .message("Visitor updated successfully!")
                         .build());
     }
@@ -61,7 +64,8 @@ public class VisitorController {
     public ResponseEntity<BaseResponseDto> deleteVisitor(@PathVariable Integer id) {
         visitorService.deleteVisitor(id);
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .message("Visitor deleted successfully!")
                         .build());
     }

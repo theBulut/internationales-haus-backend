@@ -27,7 +27,8 @@ public class ConsultationEventController {
     public ResponseEntity<BaseResponseDto> createConsultationEvent(
             @Valid @RequestBody ConsultationEvent ConsultationEvent) {
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .message("Consultation event created successfully!")
                         .data(ConsultationEventService.createConsultationEvent(ConsultationEvent))
                         .build());
@@ -47,7 +48,8 @@ public class ConsultationEventController {
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponseDto> getConsultationEventById(@PathVariable UUID id) {
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .message("Consultation event retrieved successfully!")
                         .data(ConsultationEventService.getConsultationEvent(id))
                         .build());
@@ -57,10 +59,11 @@ public class ConsultationEventController {
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponseDto> updateConsultationEvent(@PathVariable UUID id,
             @RequestBody ConsultationEvent update) {
+        ConsultationEventService.updateConsultationEvent(id, update);
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .message("Consultation event updated successfully!")
-                        .data(ConsultationEventService.updateConsultationEvent(id, update))
                         .build());
     }
 

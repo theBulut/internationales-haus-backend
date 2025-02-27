@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
 import com.international_house.backend.entity.Visitor;
 import com.international_house.backend.service.VisitorService;
 import com.international_house.backend.repository.VisitorRepository;
@@ -31,9 +33,10 @@ public class VisitorServiceImpl implements VisitorService {
         return visitorRepository.findAll();
     }
 
-    public Visitor updateVisitor(Integer id, Visitor update) {
-        return visitorRepository.updateVisitorById(id, update)
-                .orElseThrow(() -> new EntityNotFoundException("Visitor not found with id: " + id));
+    @Transactional
+    public void updateVisitor(Integer id, Visitor update) {
+        if (visitorRepository.findById(id).isPresent())
+            visitorRepository.save(update);
     }
 
     public void deleteVisitor(Integer id) {

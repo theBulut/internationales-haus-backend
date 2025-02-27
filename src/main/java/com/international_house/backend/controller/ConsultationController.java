@@ -41,7 +41,7 @@ public class ConsultationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> getConsultationById(Integer id) {
+    public ResponseEntity<BaseResponseDto> getConsultationById(@PathVariable Integer id) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
@@ -51,17 +51,19 @@ public class ConsultationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> updateConsulting(@RequestBody Consultation consultation) {
-        return ResponseEntity.ok(BaseResponseDto
-                .builder()
-                .data(consultationService.updateConsultation(consultation.getId(), consultation))
-                .message("Consultation updated successfully!")
-                .build());
+    public ResponseEntity<BaseResponseDto> updateConsulting(@PathVariable Integer id,
+            @RequestBody Consultation consultation) {
+        consultationService.updateConsultation(id, consultation);
+        return ResponseEntity
+                .ok(BaseResponseDto
+                        .builder()
+                        .message("Consultation updated successfully!")
+                        .build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> deleteConsultation(@RequestBody Integer consultationId) {
-        consultationService.deleteConsultation(consultationId);
+    public ResponseEntity<BaseResponseDto> deleteConsultation(@PathVariable Integer id) {
+        consultationService.deleteConsultation(id);
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()

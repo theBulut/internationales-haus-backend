@@ -27,7 +27,8 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
 
     public String login(LoginRequestDto loginDto) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+        authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 
         Optional<Employee> user = employeeRepository.findByName(loginDto.getUsername());
         if (user.isPresent()) {
@@ -42,7 +43,6 @@ public class AuthServiceImpl implements AuthService {
 
         throw new InvalidCredentialsException();
     }
-
 
     public Employee getProfile(UUID employeeId) {
         return employeeRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);

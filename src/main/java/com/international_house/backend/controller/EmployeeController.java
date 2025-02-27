@@ -46,18 +46,19 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponseDto> getEmployeeById(@PathVariable UUID id) {
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .data(employeeService.getEmployee(id))
                         .message("Employee retrieved successfully!")
                         .build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> updateEmployee(@PathVariable UUID id, @RequestBody Employee employee) {
+    public ResponseEntity<BaseResponseDto> updateEmployee(@PathVariable UUID id, @RequestBody Employee update) {
+        employeeService.updateEmployee(id, update);
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
-                        .data(employeeService.updateEmployee(id, employee))
                         .message("Employee updated successfully!")
                         .build());
     }

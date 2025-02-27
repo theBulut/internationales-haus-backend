@@ -2,6 +2,8 @@ package com.international_house.backend.service;
 
 import com.international_house.backend.entity.Consultation;
 
+import jakarta.transaction.Transactional;
+
 import java.util.List;
 
 public interface ConsultationService {
@@ -11,7 +13,8 @@ public interface ConsultationService {
 
     List<Consultation> getConsultations();
 
-    Consultation updateConsultation(Integer id, Consultation type);
+    @Transactional
+    void updateConsultation(Integer id, Consultation type);
 
     void deleteConsultation(Integer id);
 }
