@@ -40,9 +40,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     public void updateEmployee(UUID id, Employee update) {
-        if (employeeRepository.findById(id).isPresent())
+        if (employeeRepository.findById(id).isPresent()) {
+            update.setPassword(passwordEncoder.encode(update.getPassword()));
             employeeRepository.save(update);
-
+        }
     }
 
     public void deleteEmployee(UUID id) {

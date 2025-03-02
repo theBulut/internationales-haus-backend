@@ -26,7 +26,6 @@ public class JwtUtil {
 
     private final ObjectMapper jacksonObjectMapper;
 
-
     public String generateToken(Employee employee) {
         JavaType mapType = jacksonObjectMapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
         Map<String, Object> claims = jacksonObjectMapper.convertValue(employee, mapType);
@@ -53,7 +52,6 @@ public class JwtUtil {
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         Claims claims = Jwts.parserBuilder()

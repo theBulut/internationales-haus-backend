@@ -31,6 +31,6 @@ public class Visitor {
     private Boolean beingCalled = false;
 
     @ManyToOne
-    @JoinColumn(name = "consultation")
+    @JoinColumn(name = "consultation", nullable = false)
     private Consultation consultation;
 }

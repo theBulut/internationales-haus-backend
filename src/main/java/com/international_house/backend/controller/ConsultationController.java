@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
 @Tag(name = ConsultationEndpoint.API_TAG)
 @RequestMapping(path = ConsultationEndpoint.BASE_URI)
 public class ConsultationController {
 
     private final ConsultationService consultationService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<BaseResponseDto> createConsultation(@Valid @RequestBody Consultation consultation) {
         return ResponseEntity
@@ -50,8 +50,9 @@ public class ConsultationController {
                         .build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> updateConsulting(@PathVariable Integer id,
+    public ResponseEntity<BaseResponseDto> updateConsultation(@PathVariable Integer id,
             @RequestBody Consultation consultation) {
         consultationService.updateConsultation(id, consultation);
         return ResponseEntity
@@ -61,6 +62,7 @@ public class ConsultationController {
                         .build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponseDto> deleteConsultation(@PathVariable Integer id) {
         consultationService.deleteConsultation(id);
