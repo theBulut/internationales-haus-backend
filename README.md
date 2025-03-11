@@ -301,7 +301,7 @@ With these steps, you can successfully set up and run the application. If any is
 The application is documented using **Swagger/OpenAPI**. Accessible at:
 
  ```
-  http://localhost:8080/documentation
+  http://localhost:8080/swagger-ui/index.html
   ```
 
 This interface allows you to view and test all available endpoints.
