@@ -279,6 +279,32 @@ This section outlines planned features and improvements for the project. These r
 2. **Better Password Encryption:**  
    Upgrade password encryption to use cutting-edge methods to guard against increasingly powerful attackers, ensuring higher levels of security.
 
+---
+
+## **Further Readings**
+
+Here are some useful links to official documentation and resources for the technologies used in the project:
+
+- **PostgreSQL Documentation:**  
+  https://www.postgresql.org/docs/
+
+- **Docker Documentation:**  
+  https://docs.docker.com/
+
+- **Redis Documentation:**  
+  https://redis.io/docs/
+
+- **Apache Maven Documentation:**  
+  https://maven.apache.org/guides/index.html
+
+- **Spring Boot Reference Documentation:**  
+  https://docs.spring.io/spring-boot/docs/current/reference/html/
+
+- **Spring Security (JWT):**  
+  https://spring.io/projects/spring-security
+
+- **Spring Data JPA Reference:**  
+  https://docs.spring.io/spring-data/jpa/reference/jpa.html
 
 ---
 
