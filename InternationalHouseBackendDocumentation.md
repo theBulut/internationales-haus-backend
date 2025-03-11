@@ -207,37 +207,88 @@ By centralizing exception handling, the application reduces redundancy and provi
 - Install a PostgreSQL database locally or ensure access to a cloud instance.
 - Use an IDE like IntelliJ IDEA or VS Code with Java support.
 
-### Local Execution
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-folder>
-   ```
+### **Local Execution**
 
-2. Install dependencies:
-   ```bash
-   ./mvnw install
-   ```
+Follow these steps to run the application locally:
 
-3. Configure `application-dev.yml` with database credentials:
-   ```yaml
-   spring:
-       datasource:
-           url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/international-house}
-           username: ${JDBC_DATABASE_USERNAME:postgres}
-           password: ${JDBC_DATABASE_PASSWORD:postgres}
-   ```
 
-4. Run the application:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
+#### **1. Install Maven**
+Ensure Maven is installed. Maven is required to manage dependencies and build the project. Installation guide:
+- [Official Maven Installation Guide](https://maven.apache.org/install.html)
 
-### **Docker-Based Environment**
-- Use `docker-compose` for local deployment.
-- The `docker-compose.yml` sets up the application container alongside supporting services (Redis, PostgreSQL).
+After installing Maven, verify the installation by running the following command in your terminal:
+```bash
+mvn -v
+```
 
 ---
+
+#### **2. Install Dependencies**
+Synchronize and install the dependencies defined in the `pom.xml` file by running:
+```bash
+mvn clean install
+```
+This step downloads the required libraries for the project and creates the necessary JAR files in your local Maven repository.
+
+---
+
+#### **3. Install Docker**
+Install Docker to run the required services such as PostgreSQL and Redis in containers. Installation guide:
+- [Official Docker Installation Guide](https://docs.docker.com/get-docker/)
+
+Verify Docker installation by running:
+```bash
+docker --version
+```
+
+---
+
+#### **4. Start PostgreSQL and Redis with Docker**
+The database services are configured using the `docker-compose.yml` file. Start them by running:
+```bash
+docker-compose up
+```
+
+- **PostgreSQL:** Runs on port `5432`.
+- **Redis:** Runs on port `6379`.
+
+> Alternatively, you can also start these services using individual Docker commands:
+```bash
+docker run -d --rm --name postgres -e POSTGRES_DB=international-house -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres
+
+docker run -d --rm --name redis -p 6379:6379 redis
+```
+
+Once the services are running, you can verify their status using appropriate tools or commands:
+- Check PostgreSQL: Use a GUI tool like pgAdmin or the command `docker logs <container-id>` to ensure the database is up and running.
+- Check Redis: Use Redis CLI or check the container logs to confirm Redis is running.
+
+---
+
+#### **5. Start the Backend**
+1. Import the project into an IDE like IntelliJ IDEA.
+2. Navigate to the entry point of the application: `BackendApplication.java` in `src/main/java/com/international_house/backend`.
+3. Run the `BackendApplication` class:
+    - Click on the main method and run the application within the IDE.
+    - Alternatively, start the application in the command line:
+      ```bash
+      mvn spring-boot:run
+      ```
+
+---
+
+#### **6. Verify the Application**
+Once the application starts successfully, all necessary services should be running. Verify the following:
+- **Backend API Status:** The API documentation should be available at `http://localhost:<port>/documentation`.
+- **Docker Services:** Ensure PostgreSQL and Redis are still active by checking Docker's active containers:
+  ```bash
+  docker ps
+  ```
+
+---
+
+With these steps, you can successfully set up and run the application. If any issue arises, check the application logs in the IDE or the terminal for troubleshooting.
+
 
 ## **API Documentation**
 
