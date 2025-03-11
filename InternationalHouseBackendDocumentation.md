@@ -1,150 +1,291 @@
 # International House Backend – Technical Documentation
 
-This documentation provides a comprehensive overview of the project, its architecture, key components, and steps for local execution. This README file serves as the central source of information for developers, administrators, and clients.
+This documentation provides a comprehensive overview of the project, its architecture, key components, and steps for local execution. It serves as the central source of information for developers, administrators, and stakeholders.
 
 ---
 
-## Table of Contents
-
+## **Table of Contents**
 1. [Overview](#overview)
 2. [Architecture and Technologies](#architecture-and-technologies)
 3. [Key Components](#key-components)
-   - [Authentication & Security](#authentication--security)
-   - [Data Management](#data-management)
-   - [Configuration & Initialization](#configuration--initialization)
+    - [Authentication & Security](#authentication--security)
+    - [Data Management](#data-management)
+    - [Controller-Service-Entity Layers](#controller-service-entity-layers)
 4. [Setup and Installation](#setup-and-installation)
-   - [Prerequisites](#prerequisites)
-   - [Local Execution](#local-execution)
-   - [Docker-Based Environment](#docker-based-environment)
+    - [Prerequisites](#prerequisites)
+    - [Local Execution](#local-execution)
+    - [Docker-Based Environment](#docker-based-environment)
 5. [API Documentation](#api-documentation)
 6. [Additional Notes](#additional-notes)
 
 ---
 
-## Overview
+## **Overview**
 
-The **International House Backend** is a server-side system implemented as a RESTful API that handles the management of employee and visitor data. The application leverages modern security mechanisms using JSON Web Tokens (JWT) and employs a clear separation into service, repository, and controller layers, ensuring maintainability and extensibility.
+The **International House Backend** is a server-side system implemented as a **RESTful API** that manages employees, visitors, and consultation events. It also supports multilingual information storage and retrieval. The backend uses modern design patterns and technologies to ensure security, scalability, and maintainability.
 
----
+Key features include:
+- A **role-based security system** using JSON Web Tokens (JWT).
+- Full **CRUD operations** for employees, visitors, and consultations.
+- **Swagger/OpenAPI** integration for API documentation.
+- A modular architecture with distinct responsibilities (controllers, services, repositories, and entities).
 
-## Architecture and Technologies
-
-The application is built using the following technologies and frameworks:
-
-- **Spring Boot 3.4.2** – The foundation of the application, providing auto-configuration and production-ready features.
-- **Spring Data JPA** – Handling data persistence in a PostgreSQL database.
-- **Spring MVC** – Implementation of REST endpoints.
-- **Spring Security** – Implementing authentication and authorization using JSON Web Tokens (JWT).
-- **Jakarta EE** – Utilized for Jakarta imports in validations and other components.
-- **Lombok** – Reduces boilerplate code in Java classes.
-- **Redis** – In-memory data store used for session management.
-- **ModelMapper** – Simplifies the conversion between DTOs and entities.
+The structure follows the **Controller-Service-Repository (CSR)** design pattern, which ensures clean separation between business logic, data management, and API endpoints.
 
 ---
 
-## Key Components
+## **Architecture and Technologies**
 
-### Authentication & Security
-
-- **JWT Filter:**  
-  A `JwtFilter` intercepts every request to check for a provided JWT token. It extracts the employee information, validates the token, and sets the Spring Security context accordingly.
-
-- **CustomAuthenticationEntryPoint:**  
-  This component handles authentication errors by returning consistent JSON-based error responses to the client.
-
-- **SecurityConfig:**  
-  Configures the security of the endpoints by allowing public access to endpoints like `/api/auth/**`, `/documentation`, and `/health`, while securing all other endpoints. It also ensures that sessions are stateless.
-
-### Data Management
-
-- **Entities and DTOs:**  
-  - The `Employee` entity manages user information and defines roles such as ADMIN and USER.
-  - Other entities (e.g., `Visitor`) support CRUD operations, implemented via their corresponding service layers.
-
-- **Service Layers:**  
-  - The `VisitorServiceImpl` handles create, read, update, and delete operations for visitor data.
-  - The `InformationService` (along with its implementation) provides multilingual information and supports transactional operations.
-
-### Configuration & Initialization
-
-- **Admin User Initialization:**  
-  The `AppInitializerServiceImpl` ensures that an admin user exists at application startup. If no admin record is found, a new one is created automatically.
-
-- **Jackson Configuration:**  
-  Custom configuration for Jackson ensures robust JSON (de)serialization by ignoring unknown properties and properly formatting date values.
-
-- **ModelMapper Configuration:**  
-  Configures an instance of ModelMapper to facilitate easy mapping between DTOs and underlying entities.
-
-- **Spring Profiles and Environment Variables:**  
-  Configuration is managed through YAML files (e.g., `application-dev.yml` and `application.yml`), utilizing profiles to distinguish between development and production environments.
+The application uses the following frameworks and tools:
+- **Spring Boot 3.4.2** – Primary backend framework.
+- **Spring Security** – Provides JWT-based authentication and role-based access control.
+- **Spring Data JPA** – Used for data persistence with PostgreSQL.
+- **Swagger/OpenAPI** – For documenting API endpoints.
+- **Jakarta EE** – Utilized for standard validation and server-side Java components.
+- **Redis** – Used for session management and caching.
+- **Lombok** – Eliminates boilerplate code in Java projects.
+- **Docker** – For containerized deployment.
+- **ModelMapper** – Simplifies mapping between DTOs and entities.
 
 ---
 
-## Setup and Installation
+## **Key Components**
 
-### Prerequisites
+### **Authentication & Security**
 
-- **Java SDK:** Version 17 (Compatible with Version 19)
-- **Maven:** For build and dependency management
-- **Docker & Docker Compose:** To start necessary services (PostgreSQL and Redis)
+- **JWT-Based Security:**  
+  JWT tokens are used for authenticating requests. All secured endpoints validate the JWT token before processing the request.
+    - The token is generated upon successful login and contains user-specific claims (e.g., role, name, etc.).
+    - Tokens are validated and parsed using the `JwtUtil` class.
+
+- **Role-Based Access Control:**  
+  Access to endpoints is governed by Spring Security's pre-authorization mechanisms (e.g., `@PreAuthorize("hasRole('ADMIN')")`).
+    - Example: Only `ROLE_ADMIN` users can create employees.
+
+- **Password Hashing:**  
+  User passwords are hashed using a `PasswordEncoder` for enhanced security.
+
+---
+
+### **Data Management**
+
+- **Entities** act as the core data models (e.g., `Employee`, `Visitor`, `Consultation`). They are annotated with JPA annotations for database table mapping.
+- **Repositories** provide database interaction via interfaces extending `JpaRepository`.
+
+- **DTOs (Data Transfer Objects):**
+    - Used to encapsulate API responses and control what data is returned to the frontend.
+    - Example: `BaseResponseDto` is used across endpoints for consistent API response structures.
+
+---
+
+### **Controller-Service-Entity Layers**
+
+#### **1. Controller Layer**
+- The controller layer serves as the entry point for API calls and handles incoming HTTP requests.
+- Each entity (e.g., Employee, Visitor, Consultation) has a corresponding REST controller.
+- Controllers do not contain business logic but instead delegate it to the service layer.
+
+**Examples:**
+- `EmployeeController` handles API requests related to employee management (`/api/employees`).
+- `VisitorController` manages visitor-related functionalities (`/api/visitors`).
+
+**Common Classes:**
+- `BaseResponseDto`: Standardizes responses across all endpoints.
+- Example:
+  ```java
+  ResponseEntity<BaseResponseDto> responseEntity;
+  ```
+
+#### **2. Service Layer**
+- Services implement the application's business logic, delegating data management to repositories.
+- Example functionality:
+    - Creating new employees (`EmployeeServiceImpl`)
+    - Fetching consultations (`ConsultationServiceImpl`)
+
+**Key Classes:**
+- `EmployeeService`
+- `VisitorService`
+- `ConsultationService`
+
+**Detailed Features:**
+- Services ensure validation and transformations (e.g., encoding sensitive data like passwords, catching entities that don't exist, etc.).
+- Use of annotations like `@Transactional` guarantees consistent database state.
+
+#### **3. Entity Layer**
+- The entity layer represents database tables using JPA.
+- Each entity corresponds to one or more tables in the PostgreSQL database.
+- Example Entities:
+    - `Employee`: Stores information like ID, Name, Role, and Password.
+    - `Visitor`: Represents visitor details with attributes like ID, name, etc.
+    - `Consultation`: Represents consultations scheduled within the system.
+
+---
+
+### **How They Work Together**
+1. **Request Flow:**
+- The client sends a request to a specific endpoint managed by the controller.
+- The controller passes the request to the appropriate service.
+- The service layer performs business logic and communicates with the repository layer to retrieve or save data.
+- The service returns the processed data back to the controller, which encapsulates it in a standard response object.
+
+2. **Entity Mapping:**
+- Controllers process request payloads into entities (if needed).
+- Services map entities back or forth from DTOs, ensuring loosely coupled and secure responses.
+
+---
+
+### **Error Handling**
+
+Error handling in the application ensures consistent and meaningful error responses. The following components are used:
+
+#### **1. BaseException**
+- Serves as the foundation for all custom exceptions.
+- Provides attributes like `httpStatus` and `errorCode` to standardize error messages across different exceptions.
+
+**Attributes:**
+- `httpStatus`: HTTP response status for the error.
+- `message`: Error message conveyed to the client.
+- `errorCode`: A unique integer code for each type of error.
+
+Example custom exceptions extending `BaseException`:
+- `EmployeeAlreadyExistException`: Triggered when attempting to create an employee that already exists.
+- `EmployeeNotFoundException`: Thrown when an employee cannot be found in the database.
+- `InvalidCredentialsException`: Raised during authentication for invalid username or password.
+
+#### **2. GlobalExceptionFilter**
+- A centralized exception-handling mechanism using `@ControllerAdvice`.
+- Captures and processes exceptions globally, ensuring clients receive consistent JSON error responses.
+- Handles various exception types, including:
+    - `BaseException`: Returns structured error responses for business exceptions.
+    - `MethodArgumentNotValidException`: Captures validation errors for input payloads and returns detailed validation error messages.
+    - `AccessDeniedException`: Handles unauthorized access attempts.
+    - Generic `RuntimeException`s: Provides a fallback processor for unexpected errors.
+
+**Error Response Example:**
+When a business exception occurs:
+```json
+{
+  "errorCode": 2,
+  "message": "Employee already exists",
+  "path": "/api/employees",
+  "status": 400,
+  "timestamp": "2023-10-20T12:34:56"
+}
+```
+
+#### **3. Validation**
+- Validation errors for incoming requests are handled by `MethodArgumentNotValidException`, which maps field-level validation errors into descriptive JSON objects.
+
+**Example Validation Error Response:**
+```json
+{
+  "errorCode": 1,
+  "message": "Validation error",
+  "data": {
+    "name": "Name must not be empty",
+    "email": "Email is not valid"
+  },
+  "status": 400,
+  "timestamp": "2023-10-20T12:34:56"
+}
+```
+
+#### **Custom Exception Highlights:**
+- `EmployeeAlreadyExistException`: Thrown if an employee with the given properties already exists.
+- `EmployeeNotFoundException`: Thrown when a resource is missing from the database.
+- `InvalidCredentialsException`: Used during login attempts for invalid username/password combinations.
+
+By centralizing exception handling, the application reduces redundancy and provides a consistent developer and client experience.
+
+---
+
+## **Setup and Installation**
+
+### **Prerequisites**
+- Install **Java 17** or higher.
+- Install **Docker** for containerized execution.
+- Install a PostgreSQL database locally or ensure access to a cloud instance.
+- Use an IDE like IntelliJ IDEA or VS Code with Java support.
 
 ### Local Execution
-
-1. **Start Service Containers:**  
-   Ensure that PostgreSQL and Redis are available. Alternatively, start the containers using Docker Compose:
-
+1. Clone the repository:
    ```bash
-   docker-compose up -d
+   git clone <repository-url>
+   cd <repository-folder>
    ```
 
-2. **Build and Run the Project:**  
-   From the project root directory, execute the following commands:
-
+2. Install dependencies:
    ```bash
-   mvn clean install
-   mvn spring-boot:run
+   ./mvnw install
    ```
 
-3. **Access the Application:**  
-   By default, the application runs on port `8080`, unless otherwise specified in the configuration files.
-
-### Docker-Based Environment
-
-For a containerized execution, the entire setup (including the database and Redis) can be provided via Docker Compose. Build the Spring Boot image and run the container as follows:
-
-1. **Build the Image:**
-
-   ```bash
-   mvn clean package
-   docker build -t international-house-backend .
+3. Configure `application-dev.yml` with database credentials:
+   ```yaml
+   spring:
+       datasource:
+           url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/international-house}
+           username: ${JDBC_DATABASE_USERNAME:postgres}
+           password: ${JDBC_DATABASE_PASSWORD:postgres}
    ```
 
-2. **Start the Containers:**  
-   Make sure the `docker-compose.yml` file is correctly configured, then start:
-
+4. Run the application:
    ```bash
-   docker-compose up -d
+   ./mvnw spring-boot:run
    ```
+
+### **Docker-Based Environment**
+- Use `docker-compose` for local deployment.
+- The `docker-compose.yml` sets up the application container alongside supporting services (Redis, PostgreSQL).
 
 ---
 
-## API Documentation
+## **API Documentation**
 
-The API documentation is generated using Springdoc OpenAPI:
+The application is documented using **Swagger/OpenAPI**. Accessible at:
 
-- **Swagger UI:**  
-  Once the application is running, the interactive API documentation is available at:
-
-  ```
+ ```
   http://localhost:8080/documentation
   ```
 
 This interface allows you to view and test all available endpoints.
 
+Endpoints:
+- `/api/auth/*` – Authentication and profile management.
+- `/api/employees/*` – Employee CRUD operations.
+- `/api/visitors/*` – Visitor management.
+- `/api/informations/*` – Multilingual system information.
+- `/api/consultations/*` – Manage scheduled consultations.
+
+---
+
+## **Future Features & Development Plans**
+
+This section outlines planned features and improvements for the project. These represent ongoing efforts to enhance functionality and scalability.
+
+### **Planned Features**
+1. **Accessibility Features:**  
+   Introduce enhanced accessibility features to better support handicapped users, such as optimized navigation and additional tools.
+
+2. **Support for More Languages:**  
+   Expand frontend language support beyond English and German, providing international users with a more inclusive experience.
+
+3. **3D Room Model of Consultations & Events:**  
+   Implement real-time 3D visualization of rooms holding consultation events to help users better locate and navigate scheduled events.
+
+### **Development Plans**
+1. **Enhanced Data Transfer Objects (DTOs):**  
+   Extend the project with more dedicated DTO classes for all endpoints, improving request validations and ensuring consistent API responses.
+
+2. **Better Password Encryption:**  
+   Upgrade password encryption to use cutting-edge methods to guard against increasingly powerful attackers, ensuring higher levels of security.
+
+
 ---
 
 ## Additional Notes
+- **Initialization:**  
+  The system includes automatic **admin creation** at startup via the `AppInitializerServiceImpl`. Default admin credentials are fetched from environment variables.\
+  The application supports **CORS configurations** (`WebConfig.java`) for cross-origin requests, allowing frontend integrations.
 
 - **Error Handling:**  
   The application employs an error-handling Spring Boot Starter that ensures consistent HTTP error codes and detailed error descriptions are returned.
