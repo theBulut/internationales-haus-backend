@@ -285,7 +285,8 @@ Once the services are running, you can verify their status using appropriate too
 
 #### **6. Verify the Application**
 Once the application starts successfully, all necessary services should be running. Verify the following:
-- **Backend API Status:** The API documentation should be available at `http://localhost:<port>/documentation`.
+- **Backend API Health Check:** API health check endpoint returns the operational status of the API and it should be available at `http://localhost:8080/health`   
+- **Backend API Status:** The API documentation should be available at `http://localhost:8080/swagger-ui/index.html`.
 - **Docker Services:** Ensure PostgreSQL and Redis are still active by checking Docker's active containers:
   ```bash
   docker ps
