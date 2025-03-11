@@ -2,8 +2,6 @@ package com.international_house.backend.service;
 
 import com.international_house.backend.entity.ConsultationEvent;
 
-import jakarta.transaction.Transactional;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +12,6 @@ public interface ConsultationEventService {
 
     List<ConsultationEvent> getConsultationEvents();
 
-    @Transactional
     void updateConsultationEvent(UUID id, ConsultationEvent update);
 
     void deleteConsultationEvent(UUID id);

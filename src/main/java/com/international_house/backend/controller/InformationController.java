@@ -44,7 +44,8 @@ public class InformationController {
 
     // Method to update an existing Information
     @PutMapping("/{language}")
-    public ResponseEntity<BaseResponseDto> updateInformation(@PathVariable String language,
+    public ResponseEntity<BaseResponseDto> updateInformation(@RequestHeader("Authorization") String token,
+            @PathVariable String language,
             @Valid @RequestBody Information update) {
         InformationService.updateInformation(language, update);
         return ResponseEntity

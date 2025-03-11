@@ -6,7 +6,6 @@ import com.international_house.backend.entity.Consultation;
 import com.international_house.backend.service.ConsultationService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,8 @@ public class ConsultationController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<BaseResponseDto> createConsultation(@Valid @RequestBody Consultation consultation) {
+    public ResponseEntity<BaseResponseDto> createConsultation(@RequestHeader("Authorization") String token,
+            @RequestBody Consultation consultation) {
         return ResponseEntity
                 .ok(BaseResponseDto.builder()
                         .message("Consultation created successfully!")
@@ -32,7 +32,7 @@ public class ConsultationController {
     }
 
     @GetMapping
-    public ResponseEntity<BaseResponseDto> getConsultations() {
+    public ResponseEntity<BaseResponseDto> getConsultations(@RequestHeader("Authorization") String token) {
         return ResponseEntity
                 .ok(BaseResponseDto.builder()
                         .data(consultationService.getConsultations())
@@ -41,7 +41,8 @@ public class ConsultationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> getConsultationById(@PathVariable Integer id) {
+    public ResponseEntity<BaseResponseDto> getConsultationById(@RequestHeader("Authorization") String token,
+            @PathVariable Integer id) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
@@ -52,7 +53,8 @@ public class ConsultationController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> updateConsultation(@PathVariable Integer id,
+    public ResponseEntity<BaseResponseDto> updateConsultation(@RequestHeader("Authorization") String token,
+            @PathVariable Integer id,
             @RequestBody Consultation consultation) {
         consultationService.updateConsultation(id, consultation);
         return ResponseEntity
@@ -64,7 +66,8 @@ public class ConsultationController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> deleteConsultation(@PathVariable Integer id) {
+    public ResponseEntity<BaseResponseDto> deleteConsultation(@RequestHeader("Authorization") String token,
+            @PathVariable Integer id) {
         consultationService.deleteConsultation(id);
         return ResponseEntity
                 .ok(BaseResponseDto

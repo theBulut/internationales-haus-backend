@@ -1,9 +1,9 @@
 package com.international_house.backend.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.international_house.backend.entity.Consultation;
@@ -31,10 +31,15 @@ public class ConsultationServiceImpl implements ConsultationService {
                 .orElseThrow(() -> new EntityNotFoundException("Consultation Event not found with id: " + id));
     }
 
-    @Transactional
     public void updateConsultation(Integer id, Consultation update) {
         if (consultationRepository.findById(id).isPresent())
             consultationRepository.save(update);
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void resetConsultationDailyVisitorCount() {
+        consultationRepository.resetDailyVisitorCount();
+        System.out.println("Daily Visitor Counts have been reset to 0.");
     }
 
     public void deleteConsultation(Integer id) {

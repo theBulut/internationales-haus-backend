@@ -4,7 +4,6 @@ import com.international_house.backend.entity.Information;
 import com.international_house.backend.repository.InformationRepository;
 import com.international_house.backend.service.InformationService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ public class InformationServiceImpl implements InformationService {
         return informationRepository.findAll();
     }
 
-    @Transactional
     public Information getInformation(String language) {
         if (informationRepository.findByLanguage(language).isPresent())
             return informationRepository.findByLanguage(language).get();
@@ -29,7 +27,6 @@ public class InformationServiceImpl implements InformationService {
             return new Information();
     }
 
-    @Transactional
     public void updateInformation(String language, Information update) {
         update.setLanguage(language);
         informationRepository.save(update);

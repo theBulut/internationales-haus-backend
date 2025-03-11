@@ -6,7 +6,6 @@ import com.international_house.backend.entity.ConsultationEvent;
 import com.international_house.backend.service.ConsultationEventService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class ConsultationEventController {
     // Method to create a new ConsultationEvent
     @PostMapping
     public ResponseEntity<BaseResponseDto> createConsultationEvent(
-            @Valid @RequestBody ConsultationEvent ConsultationEvent) {
+            @RequestHeader("Authorization") String token, @RequestBody ConsultationEvent ConsultationEvent) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
@@ -46,7 +45,8 @@ public class ConsultationEventController {
 
     // Method to retrieve a ConsultationEvent by its ID
     @GetMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> getConsultationEventById(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponseDto> getConsultationEventById(@RequestHeader("Authorization") String token,
+            @PathVariable UUID id) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
@@ -57,7 +57,8 @@ public class ConsultationEventController {
 
     // Method to update an existing ConsultationEvent
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> updateConsultationEvent(@PathVariable UUID id,
+    public ResponseEntity<BaseResponseDto> updateConsultationEvent(@RequestHeader("Authorization") String token,
+            @PathVariable UUID id,
             @RequestBody ConsultationEvent update) {
         ConsultationEventService.updateConsultationEvent(id, update);
         return ResponseEntity
@@ -69,7 +70,8 @@ public class ConsultationEventController {
 
     // Method to delete a ConsultationEvent by its ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> deleteConsultationEvent(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponseDto> deleteConsultationEvent(@RequestHeader("Authorization") String token,
+            @PathVariable UUID id) {
         ConsultationEventService.deleteConsultationEvent(id);
         return ResponseEntity
                 .ok(BaseResponseDto

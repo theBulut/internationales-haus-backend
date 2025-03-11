@@ -38,9 +38,6 @@ public class ConsultationEvent {
     private String repeat;
 
     @Column
-    private String room;
-
-    @Column
     private Boolean isCanceled = false;
 
     @Column

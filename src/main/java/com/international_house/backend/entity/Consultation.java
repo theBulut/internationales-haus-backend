@@ -28,5 +28,14 @@ public class Consultation {
     private String shortVersion;
 
     @Column
+    private String defaultRoom = ""; // not implemented on client
+
+    @Column
     private String color = "#e4001a";
+
+    @Column
+    private Integer totalVisitorCount = 0;
+
+    @Column
+    private Integer dailyVisitorCount = 0;
 }

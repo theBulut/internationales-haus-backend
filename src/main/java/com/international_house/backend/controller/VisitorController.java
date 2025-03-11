@@ -6,7 +6,6 @@ import com.international_house.backend.entity.Visitor;
 import com.international_house.backend.service.VisitorService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class VisitorController {
     private final VisitorService visitorService;
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> createVisitor(@Valid @RequestBody Visitor visitor) {
+    public ResponseEntity<BaseResponseDto> createVisitor(@RequestBody Visitor visitor) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
@@ -41,7 +40,7 @@ public class VisitorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> getVisitor(@PathVariable Integer id) {
+    public ResponseEntity<BaseResponseDto> getVisitor(@PathVariable String id) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
@@ -51,7 +50,8 @@ public class VisitorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> updateVisitor(@PathVariable Integer id, @RequestBody Visitor update) {
+    public ResponseEntity<BaseResponseDto> updateVisitor(@RequestHeader("Authorization") String token,
+            @PathVariable String id, @RequestBody Visitor update) {
         visitorService.updateVisitor(id, update);
         return ResponseEntity
                 .ok(BaseResponseDto.builder()
@@ -60,7 +60,8 @@ public class VisitorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> deleteVisitor(@PathVariable Integer id) {
+    public ResponseEntity<BaseResponseDto> deleteVisitor(@RequestHeader("Authorization") String token,
+            @PathVariable String id) {
         visitorService.deleteVisitor(id);
         return ResponseEntity
                 .ok(BaseResponseDto

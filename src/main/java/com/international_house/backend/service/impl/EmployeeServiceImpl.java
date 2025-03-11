@@ -6,7 +6,6 @@ import com.international_house.backend.exceptions.handled.EmployeeNotFoundExcept
 import com.international_house.backend.repository.EmployeeRepository;
 import com.international_house.backend.service.EmployeeService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + id));
     }
 
-    @Transactional
     public void updateEmployee(UUID id, Employee update) {
         if (employeeRepository.findById(id).isPresent()) {
             update.setPassword(passwordEncoder.encode(update.getPassword()));

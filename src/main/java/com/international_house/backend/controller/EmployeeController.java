@@ -44,7 +44,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> getEmployeeById(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponseDto> getEmployeeById(@RequestHeader("Authorization") String token,
+            @PathVariable UUID id) {
         return ResponseEntity
                 .ok(BaseResponseDto
                         .builder()
@@ -54,7 +55,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> updateEmployee(@PathVariable UUID id, @RequestBody Employee update) {
+    public ResponseEntity<BaseResponseDto> updateEmployee(@RequestHeader("Authorization") String token,
+            @PathVariable UUID id, @RequestBody Employee update) {
         employeeService.updateEmployee(id, update);
         return ResponseEntity
                 .ok(BaseResponseDto
@@ -64,7 +66,8 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponseDto> deleteEmployee(@PathVariable UUID id) {
+    public ResponseEntity<BaseResponseDto> deleteEmployee(@RequestHeader("Authorization") String token,
+            @PathVariable UUID id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity
                 .ok(BaseResponseDto
