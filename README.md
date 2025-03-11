@@ -11,10 +11,13 @@ This documentation provides a comprehensive overview of the project, its archite
     - [Authentication & Security](#authentication--security)
     - [Data Management](#data-management)
     - [Controller-Service-Entity Layers](#controller-service-entity-layers)
-4. [Setup and Installation](#setup-and-installation)
+    - [How They Work Together](#how-they-work-together)
+    - [Error Handling](#error-handling)
+4. [Setup, Installation and Development](#setup-installation-and-development)
     - [Prerequisites](#prerequisites)
-    - [Local Execution](#local-execution)
+    - [Development](#development)
     - [Docker-Based Environment](#docker-based-environment)
+    - [Local Execution](#local-execution)
 5. [API Documentation](#api-documentation)
 6. [Additional Notes](#additional-notes)
 
@@ -204,15 +207,20 @@ By centralizing exception handling, the application reduces redundancy and provi
 ### **Prerequisites**
 - Install **Java 17** or higher.
 - Install **Docker** for containerized execution.
-- Install a PostgreSQL database locally or ensure access to a cloud instance.
+- Install a PostgreSQL database locally or ensure access to a cloud instance. (It can be used inside a docker container too)
 - Use an IDE like IntelliJ IDEA or VS Code with Java support.
+- Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
+  [learn more about Lombok](https://bootify.io/next-steps/spring-boot-with-lombok.html).
 
-### Development ###
-- During development it is recommended to use the profile `dev`. In IntelliJ `-Dspring.profiles.active=dev` can be
+### **Development**
+- During development, it is recommended to use the profile `dev`. In IntelliJ `-Dspring.profiles.active=dev` can be
   added in the VM options of the Run Configuration after enabling this property in "Modify options".
 
-Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
-[learn more about Lombok](https://bootify.io/next-steps/spring-boot-with-lombok.html).
+
+### **Docker-Based Environment**
+- Use `docker-compose` for local deployment.
+- The `docker-compose.yml` sets up the application container alongside supporting services (Redis, PostgreSQL).
+
 ### **Local Execution**
 
 Follow these steps to run the application locally:
@@ -285,18 +293,15 @@ Once the services are running, you can verify their status using appropriate too
 
 #### **6. Verify the Application**
 Once the application starts successfully, all necessary services should be running. Verify the following:
-- **Backend API Health Check:** API health check endpoint returns the operational status of the API and it should be available at `http://localhost:8080/health`   
+- **Backend API Health Check:** API health check endpoint returns the operational status of the API, and it should be available at `http://localhost:8080/health`   
 - **Backend API Status:** The API documentation should be available at `http://localhost:8080/swagger-ui/index.html`.
 - **Docker Services:** Ensure PostgreSQL and Redis are still active by checking Docker's active containers:
   ```bash
   docker ps
   ```
-
----
-
 With these steps, you can successfully set up and run the application. If any issue arises, check the application logs in the IDE or the terminal for troubleshooting.
 
-
+---
 ## **API Documentation**
 
 The application is documented using **Swagger/OpenAPI**. Accessible at:
@@ -311,8 +316,10 @@ Endpoints:
 - `/api/auth/*` – Authentication and profile management.
 - `/api/employees/*` – Employee CRUD operations.
 - `/api/visitors/*` – Visitor management.
-- `/api/informations/*` – Multilingual system information.
-- `/api/consultations/*` – Manage scheduled consultations.
+- `/api/information/*` – Multilingual system information.
+- `/api/consultations/*` – Manage scheduled consultation areas (eg. Krankenkasse).
+- `/api/consultation/events/*` – Manage a single consultation.
+- `/api/health/*` – Checks the operational status of the API.
 
 ---
 
