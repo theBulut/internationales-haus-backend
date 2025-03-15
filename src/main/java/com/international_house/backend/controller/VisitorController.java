@@ -54,7 +54,8 @@ public class VisitorController {
             @PathVariable String id, @RequestBody Visitor update) {
         visitorService.updateVisitor(id, update);
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .message("Visitor updated successfully!")
                         .build());
     }

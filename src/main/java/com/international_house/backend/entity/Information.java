@@ -20,7 +20,6 @@ public class Information {
     @Column(nullable = false, updatable = false)
     private String language;
 
-    @Column
     @Lob
     private String content;
 }

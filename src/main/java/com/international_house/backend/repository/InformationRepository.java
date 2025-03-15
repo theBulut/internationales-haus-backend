@@ -11,9 +11,10 @@ import com.international_house.backend.entity.Information;
 
 @Repository
 public interface InformationRepository extends JpaRepository<Information, Integer> {
+
     @Modifying
     @Transactional
-    @Query("UPDATE Information v SET v = ?2 WHERE v.language = ?1")
+    @Query("UPDATE Information v SET v.content = ?2 WHERE v.language = ?1")
     int updateInformationByLanguage(String language, Information update);
 
     @Query("SELECT i FROM Information i WHERE i.language = ?1")

@@ -7,7 +7,6 @@ import com.international_house.backend.entity.Information;
 import com.international_house.backend.service.InformationService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -46,10 +45,15 @@ public class InformationController {
     @PutMapping("/{language}")
     public ResponseEntity<BaseResponseDto> updateInformation(@RequestHeader("Authorization") String token,
             @PathVariable String language,
-            @Valid @RequestBody Information update) {
+            @RequestBody Information update) {
+        System.out.println("language: " + language + " update: " + update.getContent());
         InformationService.updateInformation(language, update);
+        System.out.println("language: " + InformationService.getInformation(language).getLanguage() + " update: "
+                + InformationService.getInformation(language).getContent());
+
         return ResponseEntity
-                .ok(BaseResponseDto.builder()
+                .ok(BaseResponseDto
+                        .builder()
                         .message("Information updated successfully!")
                         .build());
 

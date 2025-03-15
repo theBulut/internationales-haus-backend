@@ -12,12 +12,28 @@ server:
       port-header: X-Forwarded-Port
 
 spring:
-  profiles:
-    active: dev #${ACTIVE_PROFILE}
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    properties:
+      hibernate:
+        batch_fetch_style: DYNAMIC
+        order_inserts: true
+        update_inserts: true
+        jdbc:
+          batch_size: 100
+          fetch_size: 100
+          batch_versioned_data: true
+          time_zone: UTC
+        generate_statistics: false
 
-logging:
-  level:
-    root: ${LOG_LEVEL:info}
+error:
+  handling:
+    http-status-in-json-response: true
+    exception-logging: NO_LOGGING
+    full-stacktrace-http-statuses: 5xx
+    log-levels:
+      5xx: ERROR
 
 springdoc:
   swagger-ui:
